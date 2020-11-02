@@ -4,7 +4,7 @@ import pickle
 import streamlit as st
 import pickle
 import numpy as np
-
+from sklearn.cluster import KMeans
 kmeans=pickle.load(open('unsupervisedmodels.pkl','rb')) 
 
 
