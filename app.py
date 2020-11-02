@@ -12,11 +12,11 @@ import seaborn as sns
 
 def main():
 	""" Common ML Dataset Explorer """
-	st.title("Machine Learning Tutorial")
-	st.subheader("Datasets For ML Explorer with Streamlit")
+	st.title("Machine Learning Tutorial APP")
+	st.subheader("Datasets For ML Explore")
 
 	html_temp = """
-	<div style="background-color:tomato;"><p style="color:white;font-size:50px;padding:10px">Streamlit is Awesome</p></div>
+	<div style="background-color:tomato;"><p style="color:white;font-size:50px;padding:10px">Machine Learning is Awesome</p></div>
 	"""
 	st.markdown(html_temp,unsafe_allow_html=True)
 
@@ -32,7 +32,7 @@ def main():
 	df = pd.read_csv(filename)
 	# Show Dataset
 
-	if st.slide.checkbox("Show Dataset"):
+	if st.checkbox("Show Dataset"):
 		number = st.number_input("Number of Rows to View")
 		st.dataframe(df.head(number))
 
