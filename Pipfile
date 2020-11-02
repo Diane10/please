@@ -10,7 +10,8 @@ pandas = "*"
 streamlit = "*"
 seaborn = "*"
 matplotlib = "*"
-sklearn="*"
+scipy>=0.15.1
+scikit-learn==0.22.1
 
 [requires]
 python_version = "3.6"
