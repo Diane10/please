@@ -5,18 +5,18 @@ import streamlit as st
 import pickle
 import numpy as np
 
-#kmeans=pickle.load(open('unsupervisedmodels.pkl','rb')) 
+kmeans=pickle.load(open('unsupervisedmodels.pkl','rb')) 
 
 
-# def predict_kmeans(CountryName,StringencyLegacyIndexForDisplay,StringencyIndexForDisplay,	StringencyIndex,StringencyLegacyIndex,ContainmentHealthIndexForDisplay,ContainmentHealthIndex,GovernmentResponseIndexForDisplay,ConfirmedCases,ConfirmedDeaths,EconomicSupportIndexForDisplay,E2_Debtcontractrelief,EconomicSupportIndex,C3_Cancelpublicevents,C1_Schoolclosing):
-#     input=np.array([[CountryName,StringencyLegacyIndexForDisplay,StringencyIndexForDisplay,	StringencyIndex,StringencyLegacyIndex,ContainmentHealthIndexForDisplay,ContainmentHealthIndex,GovernmentResponseIndexForDisplay,ConfirmedCases,ConfirmedDeaths,EconomicSupportIndexForDisplay,E2_Debtcontractrelief,EconomicSupportIndex,C3_Cancelpublicevents,C1_Schoolclosing]]).astype(np.float64)
-#     prediction=kmeans.predict(input)
-#     return prediction
+def predict_kmeans(CountryName,StringencyLegacyIndexForDisplay,StringencyIndexForDisplay,	StringencyIndex,StringencyLegacyIndex,ContainmentHealthIndexForDisplay,ContainmentHealthIndex,GovernmentResponseIndexForDisplay,ConfirmedCases,ConfirmedDeaths,EconomicSupportIndexForDisplay,E2_Debtcontractrelief,EconomicSupportIndex,C3_Cancelpublicevents,C1_Schoolclosing):
+    input=np.array([[CountryName,StringencyLegacyIndexForDisplay,StringencyIndexForDisplay,	StringencyIndex,StringencyLegacyIndex,ContainmentHealthIndexForDisplay,ContainmentHealthIndex,GovernmentResponseIndexForDisplay,ConfirmedCases,ConfirmedDeaths,EconomicSupportIndexForDisplay,E2_Debtcontractrelief,EconomicSupportIndex,C3_Cancelpublicevents,C1_Schoolclosing]]).astype(np.float64)
+    prediction=kmeans.predict(input)
+    return prediction
 
 st.title("Records of countries classified in the clusters")
 html_temp = """
 <div style="background-color:#025246 ;padding:10px">
-<h2 style="color:white;text-align:center;">Forest Fire Prediction ML App </h2>
+<h2 style="color:white;text-align:center;">Unsupervised App </h2>
 </div>
 """
 st.markdown(html_temp, unsafe_allow_html=True)
@@ -47,14 +47,10 @@ danger_html="""
    </div>
 """
 
-#     if st.button("Predict"):
-#         output=predict_forest(CountryName,StringencyLegacyIndexForDisplay,StringencyIndexForDisplay,	StringencyIndex,StringencyLegacyIndex,ContainmentHealthIndexForDisplay,ContainmentHealthIndex,GovernmentResponseIndexForDisplay,ConfirmedCases,ConfirmedDeaths,EconomicSupportIndexForDisplay,E2_Debtcontractrelief,EconomicSupportIndex,C3_Cancelpublicevents,C1_Schoolclosing)
-#         st.success('This country located in cluster {}'.format(output))
+    if st.button("Predict"):
+        output=predict_forest(CountryName,StringencyLegacyIndexForDisplay,StringencyIndexForDisplay,	StringencyIndex,StringencyLegacyIndex,ContainmentHealthIndexForDisplay,ContainmentHealthIndex,GovernmentResponseIndexForDisplay,ConfirmedCases,ConfirmedDeaths,EconomicSupportIndexForDisplay,E2_Debtcontractrelief,EconomicSupportIndex,C3_Cancelpublicevents,C1_Schoolclosing)
+        st.success('This country located in cluster {}'.format(output))
 
-#         if output == 0:
-#             st.markdown(danger_html,unsafe_allow_html=True)
-#         else:
-#             st.markdown(safe_html,unsafe_allow_html=True)
 
 
 
