@@ -1,18 +1,17 @@
-
 import pickle
 #pickle.dump(kmeans,open('unsupervisedmodels.pkl','wb'))
 import streamlit as st
 import pickle
 import numpy as np
-from sklearn.cluster import KMeans
+ 
 kmeans=pickle.load(open('unsupervisedmodels.pkl','rb')) 
-
-
-def predict_kmeans(CountryName,StringencyLegacyIndexForDisplay,StringencyIndexForDisplay,	StringencyIndex,StringencyLegacyIndex,ContainmentHealthIndexForDisplay,ContainmentHealthIndex,GovernmentResponseIndexForDisplay,ConfirmedCases,ConfirmedDeaths,EconomicSupportIndexForDisplay,E2_Debtcontractrelief,EconomicSupportIndex,C3_Cancelpublicevents,C1_Schoolclosing):
-    input=np.array([[CountryName,StringencyLegacyIndexForDisplay,StringencyIndexForDisplay,	StringencyIndex,StringencyLegacyIndex,ContainmentHealthIndexForDisplay,ContainmentHealthIndex,GovernmentResponseIndexForDisplay,ConfirmedCases,ConfirmedDeaths,EconomicSupportIndexForDisplay,E2_Debtcontractrelief,EconomicSupportIndex,C3_Cancelpublicevents,C1_Schoolclosing]]).astype(np.float64)
+ 
+ 
+def predict_kmeans(CountryName,StringencyLegacyIndexForDisplay,StringencyIndexForDisplay,   StringencyIndex,StringencyLegacyIndex,ContainmentHealthIndexForDisplay,ContainmentHealthIndex,GovernmentResponseIndexForDisplay,ConfirmedCases,ConfirmedDeaths,EconomicSupportIndexForDisplay,E2_Debtcontractrelief,EconomicSupportIndex,C3_Cancelpublicevents,C1_Schoolclosing):
+    input=np.array([[CountryName,StringencyLegacyIndexForDisplay,StringencyIndexForDisplay, StringencyIndex,StringencyLegacyIndex,ContainmentHealthIndexForDisplay,ContainmentHealthIndex,GovernmentResponseIndexForDisplay,ConfirmedCases,ConfirmedDeaths,EconomicSupportIndexForDisplay,E2_Debtcontractrelief,EconomicSupportIndex,C3_Cancelpublicevents,C1_Schoolclosing]]).astype(np.float64)
     prediction=kmeans.predict(input)
     return prediction
-
+ 
 st.title("Records of countries classified in the clusters")
 html_temp = """
 <div style="background-color:#025246 ;padding:10px">
@@ -35,8 +34,19 @@ E2_Debtcontractrelief = st.text_input("E2_Debtcontractrelief","Type Here",key='1
 EconomicSupportIndex = st.text_input("EconomicSupportIndex","Type Here",key='11')
 C3_Cancelpublicevents = st.text_input("C3_Cancelpublicevents","Type Here",key='12')
 C1_Schoolclosing = st.text_input("C1_Schoolclosing","Type Here",key='13')
-
+ 
+safe_html="""  
+  <div style="background-color:#F4D03F;padding:10px >
+   <h2 style="color:white;text-align:center;"> Your forest is safe</h2>
+   </div>
+"""
+danger_html="""  
+  <div style="background-color:#F08080;padding:10px >
+   <h2 style="color:black ;text-align:center;"> Your forest is in danger</h2>
+   </div>
+"""
+ 
 if st.button("Predict"):
-  output=predict_kmeans(CountryName,StringencyLegacyIndexForDisplay,StringencyIndexForDisplay,	StringencyIndex,StringencyLegacyIndex,ContainmentHealthIndexForDisplay,ContainmentHealthIndex,GovernmentResponseIndexForDisplay,ConfirmedCases,ConfirmedDeaths,EconomicSupportIndexForDisplay,E2_Debtcontractrelief,EconomicSupportIndex,C3_Cancelpublicevents,C1_Schoolclosing)
-  st.success('This country located in this cluster {}'.format(output))
+  output=predict_kmeans(CountryName,StringencyLegacyIndexForDisplay,StringencyIndexForDisplay,  StringencyIndex,StringencyLegacyIndex,ContainmentHealthIndexForDisplay,ContainmentHealthIndex,GovernmentResponseIndexForDisplay,ConfirmedCases,ConfirmedDeaths,EconomicSupportIndexForDisplay,E2_Debtcontractrelief,EconomicSupportIndex,C3_Cancelpublicevents,C1_Schoolclosing)
+  st.success('This country located in cluster {}'.format(output))
 
