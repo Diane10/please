@@ -36,22 +36,7 @@ EconomicSupportIndex = st.text_input("EconomicSupportIndex","Type Here",key='11'
 C3_Cancelpublicevents = st.text_input("C3_Cancelpublicevents","Type Here",key='12')
 C1_Schoolclosing = st.text_input("C1_Schoolclosing","Type Here",key='13')
 
-safe_html="""  
-  <div style="background-color:#F4D03F;padding:10px >
-   <h2 style="color:white;text-align:center;"> Your forest is safe</h2>
-   </div>
-"""
-danger_html="""  
-  <div style="background-color:#F08080;padding:10px >
-   <h2 style="color:black ;text-align:center;"> Your forest is in danger</h2>
-   </div>
-"""
-
 if st.button("Predict"):
     output=predict_forest(CountryName,StringencyLegacyIndexForDisplay,StringencyIndexForDisplay,	StringencyIndex,StringencyLegacyIndex,ContainmentHealthIndexForDisplay,ContainmentHealthIndex,GovernmentResponseIndexForDisplay,ConfirmedCases,ConfirmedDeaths,EconomicSupportIndexForDisplay,E2_Debtcontractrelief,EconomicSupportIndex,C3_Cancelpublicevents,C1_Schoolclosing)
     st.success('This country located in cluster {}'.format(output))
-
-
-
-
 
