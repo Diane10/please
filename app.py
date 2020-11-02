@@ -38,5 +38,5 @@ C1_Schoolclosing = st.text_input("C1_Schoolclosing","Type Here",key='13')
 
 if st.button("Predict"):
   output=predict_kmeans(CountryName,StringencyLegacyIndexForDisplay,StringencyIndexForDisplay,	StringencyIndex,StringencyLegacyIndex,ContainmentHealthIndexForDisplay,ContainmentHealthIndex,GovernmentResponseIndexForDisplay,ConfirmedCases,ConfirmedDeaths,EconomicSupportIndexForDisplay,E2_Debtcontractrelief,EconomicSupportIndex,C3_Cancelpublicevents,C1_Schoolclosing)
-  st.success('This country located in cluster {}'.format(output))
+  st.success('This country located in this cluster {}'.format(output))
 
