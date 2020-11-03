@@ -131,7 +131,6 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from matplotlib import pyplot as plt
 import streamlit as st
-%matplotlib inline
 
 wcss=[]
 for i in range(1,11):
