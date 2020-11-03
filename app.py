@@ -63,9 +63,9 @@ Original file is located at
 import pandas as pd
 
 data= pd.read_csv('https://raw.githubusercontent.com/Diane10/ML/master/assignment3.csv')
-data.info()
+# data.info()
 
-data.isnull().sum()
+# data.isnull().sum()
 
 null_counts = data.isnull().sum().sort_values()
 selected = null_counts[null_counts < 8000 ]
@@ -74,10 +74,10 @@ percentage = 100 * data.isnull().sum() / len(data)
 percentage
 
 data_types = data.dtypes
-data_types
+# data_types
 
 missing_values_table = pd.concat([null_counts, percentage, data_types], axis=1)
-missing_values_table
+# missing_values_table
 
 col=['CountryName','Date','StringencyLegacyIndexForDisplay','StringencyIndexForDisplay','ContainmentHealthIndexForDisplay','GovernmentResponseIndexForDisplay',
 'EconomicSupportIndexForDisplay','C8_International travel controls','C1_School closing','C3_Cancel public events','C2_Workplace closing','C4_Restrictions on gatherings',
@@ -112,7 +112,7 @@ X=newdataset[['CountryName','StringencyLegacyIndexForDisplay','StringencyIndexFo
 # df_first_half = X[:1000]
 # df_second_half = X[1000:]
 
-"""Feature selector that removes all low-variance features."""
+# """Feature selector that removes all low-variance features."""
 
 from sklearn.feature_selection import VarianceThreshold
 
@@ -122,7 +122,7 @@ x= selector.fit_transform(X)
 df_first_half = x[:5000]
 df_second_half = x[5000:]
 
-"""Create clusters/classes of similar records using features selected in (1),  use an unsupervised learning algorithm of your choice."""
+# """Create clusters/classes of similar records using features selected in (1),  use an unsupervised learning algorithm of your choice."""
 
 # Commented out IPython magic to ensure Python compatibility.
 from sklearn.cluster import KMeans
@@ -137,7 +137,7 @@ for i in range(1,11):
     kmeans=KMeans(n_clusters=i, init='k-means++',random_state=0)
     kmeans.fit(x)
     wcss.append(kmeans.inertia_)
-
+st.set_option('deprecation.showPyplotGlobalUse', False)
 plt.plot(range(1,11),wcss)
 plt.title('The Elbow Method')
 plt.xlabel('Number of Clusters')
@@ -286,7 +286,7 @@ plt.scatter(X_tsne[:, 0], X_tsne[:, 1], c=y_pred,
             edgecolor='none', alpha=0.7, s=40,
             cmap=plt.cm.get_cmap('nipy_spectral', 10))
 plt.colorbar()
-plt.title('MNIST. t-SNE projection');
+plt.title('cluster. t-SNE projection');
 
 pca = PCA(n_components=2)
 X_reduced = pca.fit_transform(transformed)
@@ -298,7 +298,7 @@ plt.scatter(X_reduced[:, 0], X_reduced[:, 1], c=y_pred,
             edgecolor='none', alpha=0.7, s=40,
             cmap=plt.cm.get_cmap('nipy_spectral', 10))
 plt.colorbar()
-plt.title('MNIST. PCA projection');
+plt.title('cluster. PCA projection');
 st.pyplot()
 
 # """https://www.kaggle.com/kashnitsky/topic-7-unsupervised-learning-pca-and-clustering"""
