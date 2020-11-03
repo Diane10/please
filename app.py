@@ -291,15 +291,15 @@ plt.title('cluster. t-SNE projection');
 pca = PCA(n_components=2)
 X_reduced = pca.fit_transform(transformed)
 
-print('Projecting %d-dimensional data to 2D' % X.shape[1])
+# print('Projecting %d-dimensional data to 2D' % X.shape[1])
 
-plt.figure(figsize=(12,10))
-plt.scatter(X_reduced[:, 0], X_reduced[:, 1], c=y_pred, 
-            edgecolor='none', alpha=0.7, s=40,
-            cmap=plt.cm.get_cmap('nipy_spectral', 10))
-plt.colorbar()
-plt.title('cluster. PCA projection');
-st.pyplot()
+# plt.figure(figsize=(12,10))
+# plt.scatter(X_reduced[:, 0], X_reduced[:, 1], c=y_pred, 
+#             edgecolor='none', alpha=0.7, s=40,
+#             cmap=plt.cm.get_cmap('nipy_spectral', 10))
+# plt.colorbar()
+# plt.title('cluster. PCA projection');
+# st.pyplot()
 
 # """https://www.kaggle.com/kashnitsky/topic-7-unsupervised-learning-pca-and-clustering"""
 
