@@ -90,25 +90,21 @@ from sklearn.preprocessing import LabelEncoder
 newdataset['CountryName']=LabelEncoder().fit_transform(newdataset['CountryName'])
 newdataset['CountryName'].dtype
 
-"""Q1. Pick relevant columns which can be appropiate features to identify a country according to it’s COVID-19 record.
 
-select Feature which is having high correlation value
-"""
+# # map features to their absolute correlation values
+# corr = newdataset.corr().abs()
 
-# map features to their absolute correlation values
-corr = newdataset.corr().abs()
+# # set equality (self correlation) as zero
+# corr[corr == 1] = 0
 
-# set equality (self correlation) as zero
-corr[corr == 1] = 0
+# # of each feature, find the max correlation
+# # and sort the resulting array in ascending order
+# corr_cols = corr.max().sort_values(ascending=False)
 
-# of each feature, find the max correlation
-# and sort the resulting array in ascending order
-corr_cols = corr.max().sort_values(ascending=False)
+# # display the highly correlated features
+# display(corr_cols[corr_cols > 0.9])
 
-# display the highly correlated features
-display(corr_cols[corr_cols > 0.9])
-
-len(newdataset)
+# len(newdataset)
 
 X=newdataset[['CountryName','StringencyLegacyIndexForDisplay','StringencyIndexForDisplay',	'StringencyIndex','StringencyLegacyIndex','ContainmentHealthIndexForDisplay','ContainmentHealthIndex','GovernmentResponseIndexForDisplay','ConfirmedCases','ConfirmedDeaths','EconomicSupportIndexForDisplay','E2_Debt/contract relief','EconomicSupportIndex','C3_Cancel public events','C1_School closing']]
 # X=newdataset[['CountryName','StringencyLegacyIndexForDisplay','StringencyIndexForDisplay',	'StringencyIndex','StringencyLegacyIndex','ContainmentHealthIndexForDisplay','ContainmentHealthIndex','GovernmentResponseIndexForDisplay','ConfirmedCases','ConfirmedDeaths']]
@@ -136,17 +132,17 @@ from sklearn.preprocessing import MinMaxScaler
 from matplotlib import pyplot as plt
 # %matplotlib inline
 
-wcss=[]
-for i in range(1,11):
-    kmeans=KMeans(n_clusters=i, init='k-means++',random_state=0)
-    kmeans.fit(x)
-    wcss.append(kmeans.inertia_)
+# wcss=[]
+# for i in range(1,11):
+#     kmeans=KMeans(n_clusters=i, init='k-means++',random_state=0)
+#     kmeans.fit(x)
+#     wcss.append(kmeans.inertia_)
 
-plt.plot(range(1,11),wcss)
-plt.title('The Elbow Method')
-plt.xlabel('Number of Clusters')
-plt.ylabel('WCSS')
-plt.show()
+# plt.plot(range(1,11),wcss)
+# plt.title('The Elbow Method')
+# plt.xlabel('Number of Clusters')
+# plt.ylabel('WCSS')
+# plt.show()
 
 model = KMeans(n_clusters = 6)
 
@@ -174,92 +170,92 @@ plt.scatter(df_first_half[:,0],df_first_half[:,1], c=kmeans.labels_, cmap='rainb
 
 range_n_clusters = [2, 3, 4, 5, 6]
 
-from sklearn.metrics import silhouette_samples, silhouette_score
-import matplotlib.cm as cm
-import numpy as np
+# from sklearn.metrics import silhouette_samples, silhouette_score
+# import matplotlib.cm as cm
+# import numpy as np
 
-for n_clusters in range_n_clusters:
-    # Create a subplot with 1 row and 2 columns
-    fig, (ax1, ax2) = plt.subplots(1, 2)
-    fig.set_size_inches(18, 7)
+# for n_clusters in range_n_clusters:
+#     # Create a subplot with 1 row and 2 columns
+#     fig, (ax1, ax2) = plt.subplots(1, 2)
+#     fig.set_size_inches(18, 7)
 
-    # The 1st subplot is the silhouette plot
-    # The silhouette coefficient can range from -1, 1 but in this example all
-    # lie within [-0.1, 1]
-    ax1.set_xlim([-0.1, 1])
-    # The (n_clusters+1)*10 is for inserting blank space between silhouette
-    # plots of individual clusters, to demarcate them clearly.
-    ax1.set_ylim([0, len(pca_2d) + (n_clusters + 1) * 10])
+#     # The 1st subplot is the silhouette plot
+#     # The silhouette coefficient can range from -1, 1 but in this example all
+#     # lie within [-0.1, 1]
+#     ax1.set_xlim([-0.1, 1])
+#     # The (n_clusters+1)*10 is for inserting blank space between silhouette
+#     # plots of individual clusters, to demarcate them clearly.
+#     ax1.set_ylim([0, len(pca_2d) + (n_clusters + 1) * 10])
 
-    # Initialize the clusterer with n_clusters value and a random generator
-    # seed of 10 for reproducibility.
-    clusterer = KMeans(n_clusters=n_clusters, random_state=10)
-    cluster_labels = clusterer.fit_predict(pca_2d)
+#     # Initialize the clusterer with n_clusters value and a random generator
+#     # seed of 10 for reproducibility.
+#     clusterer = KMeans(n_clusters=n_clusters, random_state=10)
+#     cluster_labels = clusterer.fit_predict(pca_2d)
 
-    # The silhouette_score gives the average value for all the samples.
-    # This gives a perspective into the density and separation of the formed
-    # clusters
-    silhouette_avg = silhouette_score(pca_2d, cluster_labels)
-    print("For n_clusters =", n_clusters,
-          "The average silhouette_score is :", silhouette_avg)
+#     # The silhouette_score gives the average value for all the samples.
+#     # This gives a perspective into the density and separation of the formed
+#     # clusters
+#     silhouette_avg = silhouette_score(pca_2d, cluster_labels)
+#     print("For n_clusters =", n_clusters,
+#           "The average silhouette_score is :", silhouette_avg)
 
-    # Compute the silhouette scores for each sample
-    sample_silhouette_values = silhouette_samples(pca_2d, cluster_labels)
-    y_lower = 10
-    for i in range(n_clusters):
-        # Aggregate the silhouette scores for samples belonging to
-        # cluster i, and sort them
-        ith_cluster_silhouette_values = \
-            sample_silhouette_values[cluster_labels == i]
+#     # Compute the silhouette scores for each sample
+#     sample_silhouette_values = silhouette_samples(pca_2d, cluster_labels)
+#     y_lower = 10
+#     for i in range(n_clusters):
+#         # Aggregate the silhouette scores for samples belonging to
+#         # cluster i, and sort them
+#         ith_cluster_silhouette_values = \
+#             sample_silhouette_values[cluster_labels == i]
 
-        ith_cluster_silhouette_values.sort()
+#         ith_cluster_silhouette_values.sort()
 
-        size_cluster_i = ith_cluster_silhouette_values.shape[0]
-        y_upper = y_lower + size_cluster_i
+#         size_cluster_i = ith_cluster_silhouette_values.shape[0]
+#         y_upper = y_lower + size_cluster_i
 
-        color = cm.nipy_spectral(float(i) / n_clusters)
-        ax1.fill_betweenx(np.arange(y_lower, y_upper),
-                          0, ith_cluster_silhouette_values,
-                          facecolor=color, edgecolor=color, alpha=0.7)
+#         color = cm.nipy_spectral(float(i) / n_clusters)
+#         ax1.fill_betweenx(np.arange(y_lower, y_upper),
+#                           0, ith_cluster_silhouette_values,
+#                           facecolor=color, edgecolor=color, alpha=0.7)
 
-        # Label the silhouette plots with their cluster numbers at the middle
-        ax1.text(-0.05, y_lower + 0.5 * size_cluster_i, str(i))
+#         # Label the silhouette plots with their cluster numbers at the middle
+#         ax1.text(-0.05, y_lower + 0.5 * size_cluster_i, str(i))
 
-        # Compute the new y_lower for next plot
-        y_lower = y_upper + 10  # 10 for the 0 samples
+#         # Compute the new y_lower for next plot
+#         y_lower = y_upper + 10  # 10 for the 0 samples
 
-    ax1.set_title("The silhouette plot for the various clusters.")
-    ax1.set_xlabel("The silhouette coefficient values")
-    ax1.set_ylabel("Cluster label")
+#     ax1.set_title("The silhouette plot for the various clusters.")
+#     ax1.set_xlabel("The silhouette coefficient values")
+#     ax1.set_ylabel("Cluster label")
 
-    # The vertical line for average silhouette score of all the values
-    ax1.axvline(x=silhouette_avg, color="red", linestyle="--")
+#     # The vertical line for average silhouette score of all the values
+#     ax1.axvline(x=silhouette_avg, color="red", linestyle="--")
 
-    ax1.set_yticks([])  # Clear the yaxis labels / ticks
-    ax1.set_xticks([-0.1, 0, 0.2, 0.4, 0.6, 0.8, 1])
+#     ax1.set_yticks([])  # Clear the yaxis labels / ticks
+#     ax1.set_xticks([-0.1, 0, 0.2, 0.4, 0.6, 0.8, 1])
 
-    # 2nd Plot showing the actual clusters formed
-    colors = cm.nipy_spectral(cluster_labels.astype(float) / n_clusters)
-    ax2.scatter( pca_2d[:, 0], pca_2d[:, 1], marker='.', s=30, lw=0, alpha=0.7,
-                c=colors, edgecolor='k')
-    # Labeling the clusters
-    centers = clusterer.cluster_centers_
-    # Draw white circles at cluster centers
-    ax2.scatter(centers[:, 0], centers[:, 1], marker='o',
-                c="white", alpha=1, s=200, edgecolor='k')
+#     # 2nd Plot showing the actual clusters formed
+#     colors = cm.nipy_spectral(cluster_labels.astype(float) / n_clusters)
+#     ax2.scatter( pca_2d[:, 0], pca_2d[:, 1], marker='.', s=30, lw=0, alpha=0.7,
+#                 c=colors, edgecolor='k')
+#     # Labeling the clusters
+#     centers = clusterer.cluster_centers_
+#     # Draw white circles at cluster centers
+#     ax2.scatter(centers[:, 0], centers[:, 1], marker='o',
+#                 c="white", alpha=1, s=200, edgecolor='k')
 
-    for i, c in enumerate(centers):
-        ax2.scatter(c[0], c[1], marker='$%d$' % i, alpha=1,
-                    s=50, edgecolor='k')
+#     for i, c in enumerate(centers):
+#         ax2.scatter(c[0], c[1], marker='$%d$' % i, alpha=1,
+#                     s=50, edgecolor='k')
 
-    ax2.set_title("The visualization of the clustered data.")
-    ax2.set_xlabel("Feature space for the 1st feature")
-    ax2.set_ylabel("Feature space for the 2nd feature")
+#     ax2.set_title("The visualization of the clustered data.")
+#     ax2.set_xlabel("Feature space for the 1st feature")
+#     ax2.set_ylabel("Feature space for the 2nd feature")
 
-    plt.suptitle(("Silhouette analysis for KMeans clustering on sample data "
-                  "with n_clusters = %d" % n_clusters),
-                 fontsize=14, fontweight='bold')
-plt.show()
+#     plt.suptitle(("Silhouette analysis for KMeans clustering on sample data "
+#                   "with n_clusters = %d" % n_clusters),
+#                  fontsize=14, fontweight='bold')
+# plt.show()
 
 #km.cluster_centers_
 
@@ -279,38 +275,38 @@ y_pred =kmeans.fit_predict(transformed)
 predicted_label = kmeans.predict([[7,7.2, 3.5, 0.8, 1.6,7.2, 3.5, 0.8, 1.6,7.2, 3.5, 0.8, 1.67, 7.2, 3.5]])
 predicted_label
 
-from sklearn.manifold import TSNE
-tsne = TSNE(random_state=17)
+# from sklearn.manifold import TSNE
+# tsne = TSNE(random_state=17)
 
-X_tsne = tsne.fit_transform(transformed)
+# X_tsne = tsne.fit_transform(transformed)
 
-plt.figure(figsize=(12,10))
-plt.scatter(X_tsne[:, 0], X_tsne[:, 1], c=y_pred, 
-            edgecolor='none', alpha=0.7, s=40,
-            cmap=plt.cm.get_cmap('nipy_spectral', 10))
-plt.colorbar()
-plt.title('MNIST. t-SNE projection');
+# plt.figure(figsize=(12,10))
+# plt.scatter(X_tsne[:, 0], X_tsne[:, 1], c=y_pred, 
+#             edgecolor='none', alpha=0.7, s=40,
+#             cmap=plt.cm.get_cmap('nipy_spectral', 10))
+# plt.colorbar()
+# plt.title('MNIST. t-SNE projection');
 
-pca = PCA(n_components=2)
-X_reduced = pca.fit_transform(transformed)
+# pca = PCA(n_components=2)
+# X_reduced = pca.fit_transform(transformed)
 
-print('Projecting %d-dimensional data to 2D' % X.shape[1])
+# print('Projecting %d-dimensional data to 2D' % X.shape[1])
 
-plt.figure(figsize=(12,10))
-plt.scatter(X_reduced[:, 0], X_reduced[:, 1], c=y_pred, 
-            edgecolor='none', alpha=0.7, s=40,
-            cmap=plt.cm.get_cmap('nipy_spectral', 10))
-plt.colorbar()
-plt.title('MNIST. PCA projection');
+# plt.figure(figsize=(12,10))
+# plt.scatter(X_reduced[:, 0], X_reduced[:, 1], c=y_pred, 
+#             edgecolor='none', alpha=0.7, s=40,
+#             cmap=plt.cm.get_cmap('nipy_spectral', 10))
+# plt.colorbar()
+# plt.title('MNIST. PCA projection');
 
-"""https://www.kaggle.com/kashnitsky/topic-7-unsupervised-learning-pca-and-clustering"""
+# """https://www.kaggle.com/kashnitsky/topic-7-unsupervised-learning-pca-and-clustering"""
 
-import seaborn as sns
+# import seaborn as sns
 
-import pickle
-pickle.dump(kmeans,open('unsupervisedmodels.pkl','wb'))
+# import pickle
+# pickle.dump(kmeans,open('unsupervisedmodels.pkl','wb'))
 
-"""Create a platform where new records of countries can be classified in the clusters"""
+# """Create a platform where new records of countries can be classified in the clusters"""
 
 
 
@@ -320,7 +316,7 @@ import streamlit as st
 import pickle
 import numpy as np
 
-kmeans=pickle.load(open('unsupervisedmodels.pkl','rb')) 
+# kmeans=pickle.load(open('unsupervisedmodels.pkl','rb')) 
 
 
 def predict_kmeans(CountryName,StringencyLegacyIndexForDisplay,StringencyIndexForDisplay,	StringencyIndex,StringencyLegacyIndex,ContainmentHealthIndexForDisplay,ContainmentHealthIndex,GovernmentResponseIndexForDisplay,ConfirmedCases,ConfirmedDeaths,EconomicSupportIndexForDisplay,E2_Debtcontractrelief,EconomicSupportIndex,C3_Cancelpublicevents,C1_Schoolclosing):
