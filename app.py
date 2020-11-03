@@ -130,19 +130,21 @@ from sklearn.decomposition import PCA
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from matplotlib import pyplot as plt
-# %matplotlib inline
+import streamlit as st
+%matplotlib inline
 
-# wcss=[]
-# for i in range(1,11):
-#     kmeans=KMeans(n_clusters=i, init='k-means++',random_state=0)
-#     kmeans.fit(x)
-#     wcss.append(kmeans.inertia_)
+wcss=[]
+for i in range(1,11):
+    kmeans=KMeans(n_clusters=i, init='k-means++',random_state=0)
+    kmeans.fit(x)
+    wcss.append(kmeans.inertia_)
 
-# plt.plot(range(1,11),wcss)
-# plt.title('The Elbow Method')
-# plt.xlabel('Number of Clusters')
-# plt.ylabel('WCSS')
-# plt.show()
+plt.plot(range(1,11),wcss)
+plt.title('The Elbow Method')
+plt.xlabel('Number of Clusters')
+plt.ylabel('WCSS')
+plt.show()
+st.pyplot()
 
 model = KMeans(n_clusters = 6)
 
@@ -275,29 +277,30 @@ y_pred =kmeans.fit_predict(transformed)
 predicted_label = kmeans.predict([[7,7.2, 3.5, 0.8, 1.6,7.2, 3.5, 0.8, 1.6,7.2, 3.5, 0.8, 1.67, 7.2, 3.5]])
 predicted_label
 
-# from sklearn.manifold import TSNE
-# tsne = TSNE(random_state=17)
+from sklearn.manifold import TSNE
+tsne = TSNE(random_state=17)
 
-# X_tsne = tsne.fit_transform(transformed)
+X_tsne = tsne.fit_transform(transformed)
 
-# plt.figure(figsize=(12,10))
-# plt.scatter(X_tsne[:, 0], X_tsne[:, 1], c=y_pred, 
-#             edgecolor='none', alpha=0.7, s=40,
-#             cmap=plt.cm.get_cmap('nipy_spectral', 10))
-# plt.colorbar()
-# plt.title('MNIST. t-SNE projection');
+plt.figure(figsize=(12,10))
+plt.scatter(X_tsne[:, 0], X_tsne[:, 1], c=y_pred, 
+            edgecolor='none', alpha=0.7, s=40,
+            cmap=plt.cm.get_cmap('nipy_spectral', 10))
+plt.colorbar()
+plt.title('MNIST. t-SNE projection');
 
-# pca = PCA(n_components=2)
-# X_reduced = pca.fit_transform(transformed)
+pca = PCA(n_components=2)
+X_reduced = pca.fit_transform(transformed)
 
-# print('Projecting %d-dimensional data to 2D' % X.shape[1])
+print('Projecting %d-dimensional data to 2D' % X.shape[1])
 
-# plt.figure(figsize=(12,10))
-# plt.scatter(X_reduced[:, 0], X_reduced[:, 1], c=y_pred, 
-#             edgecolor='none', alpha=0.7, s=40,
-#             cmap=plt.cm.get_cmap('nipy_spectral', 10))
-# plt.colorbar()
-# plt.title('MNIST. PCA projection');
+plt.figure(figsize=(12,10))
+plt.scatter(X_reduced[:, 0], X_reduced[:, 1], c=y_pred, 
+            edgecolor='none', alpha=0.7, s=40,
+            cmap=plt.cm.get_cmap('nipy_spectral', 10))
+plt.colorbar()
+plt.title('MNIST. PCA projection');
+st.pyplot()
 
 # """https://www.kaggle.com/kashnitsky/topic-7-unsupervised-learning-pca-and-clustering"""
 
@@ -328,7 +331,7 @@ def main():
     st.title("Records of countries classified in the clusters")
     html_temp = """
     <div style="background-color:#025246 ;padding:10px">
-    <h2 style="color:white;text-align:center;">Forest Fire Prediction ML App </h2>
+    <h2 style="color:white;text-align:center;">Unsupervised ML App </h2>
     </div>
     """
     st.markdown(html_temp, unsafe_allow_html=True)
@@ -361,12 +364,8 @@ def main():
 
     if st.button("Predict"):
         output=predict_kmeans(CountryName,StringencyLegacyIndexForDisplay,StringencyIndexForDisplay,	StringencyIndex,StringencyLegacyIndex,ContainmentHealthIndexForDisplay,ContainmentHealthIndex,GovernmentResponseIndexForDisplay,ConfirmedCases,ConfirmedDeaths,EconomicSupportIndexForDisplay,E2_Debtcontractrelief,EconomicSupportIndex,C3_Cancelpublicevents,C1_Schoolclosing)
-        st.success('This country located in cluster {}'.format(output))
+        st.success('This country located in this cluster {}'.format(output))
 
-        if output == 0:
-            st.markdown(danger_html,unsafe_allow_html=True)
-        else:
-            st.markdown(safe_html,unsafe_allow_html=True)
 
 if __name__=='__main__':
     main()
