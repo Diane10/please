@@ -71,7 +71,7 @@ null_counts = data.isnull().sum().sort_values()
 selected = null_counts[null_counts < 8000 ]
 
 percentage = 100 * data.isnull().sum() / len(data)
-percentage
+
 
 data_types = data.dtypes
 # data_types
@@ -88,7 +88,6 @@ newdataset= newdataset.dropna()
 
 from sklearn.preprocessing import LabelEncoder
 newdataset['CountryName']=LabelEncoder().fit_transform(newdataset['CountryName'])
-newdataset['CountryName'].dtype
 
 
 # # map features to their absolute correlation values
@@ -153,7 +152,7 @@ pca_2d = pca.transform(x)
 model.fit(pca_2d)
 
 labels = model.predict(pca_2d)
-labels
+# labels
 # predicted_label = model.predict([[7.2, 3.5, 0.8, 1.6]])
 
 # pca = PCA(n_components=2).fit(df_first_half)
@@ -276,20 +275,20 @@ y_pred =kmeans.fit_predict(transformed)
 predicted_label = kmeans.predict([[7,7.2, 3.5, 0.8, 1.6,7.2, 3.5, 0.8, 1.6,7.2, 3.5, 0.8, 1.67, 7.2, 3.5]])
 predicted_label
 
-from sklearn.manifold import TSNE
-tsne = TSNE(random_state=17)
+# from sklearn.manifold import TSNE
+# tsne = TSNE(random_state=17)
 
-X_tsne = tsne.fit_transform(transformed)
+# X_tsne = tsne.fit_transform(transformed)
 
-plt.figure(figsize=(12,10))
-plt.scatter(X_tsne[:, 0], X_tsne[:, 1], c=y_pred, 
-            edgecolor='none', alpha=0.7, s=40,
-            cmap=plt.cm.get_cmap('nipy_spectral', 10))
-plt.colorbar()
-plt.title('cluster. t-SNE projection');
+# plt.figure(figsize=(12,10))
+# plt.scatter(X_tsne[:, 0], X_tsne[:, 1], c=y_pred, 
+#             edgecolor='none', alpha=0.7, s=40,
+#             cmap=plt.cm.get_cmap('nipy_spectral', 10))
+# plt.colorbar()
+# plt.title('cluster. t-SNE projection');
 
-pca = PCA(n_components=2)
-X_reduced = pca.fit_transform(transformed)
+# pca = PCA(n_components=2)
+# X_reduced = pca.fit_transform(transformed)
 
 # print('Projecting %d-dimensional data to 2D' % X.shape[1])
 
