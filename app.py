@@ -16,7 +16,8 @@ def main():
     """ Common ML Dataset Explorer """
     st.title("Machine Learning Tutorial")
     st.subheader("Datasets For ML Explorer with Streamlit")
-    file = st.file_uploader("please Upload your dataset",type=['.csv'])
+#     file = st.file_uploader("please Upload your dataset",type=['.csv'])
+    st.set_option('deprecation.showfileUploaderEncoding', False)
     html_temp = """
     <div style="background-color:tomato;"><p style="color:white;font-size:50px;padding:10px">Streamlit is Awesome</p></div>
     """
