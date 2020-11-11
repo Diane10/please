@@ -215,7 +215,7 @@ if classifier_name == 'Logistic Regression':
     max_iter= st.sidebar.slider("maximum number of iteration",100,500,key='max_item')
    
  
-    metrics= st.sidebar.multiselect("What is the metrics to plot?",('confusion matrix','roc_curve','precision_recall_curve'))
+    metrics= st.sidebar.multiselect("Wht is the metrics to plot?",('confusion matrix','roc_curve','precision_recall_curve'))
  
     if st.sidebar.button("classify",key='classify'):
         st.subheader("Logistic Regression result")
