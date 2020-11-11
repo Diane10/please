@@ -8,6 +8,7 @@ import pandas as pd
 # Viz Pkgs
 import matplotlib.pyplot as plt 
 import matplotlib
+import io
 matplotlib.use('Agg')
 import seaborn as sns 
  
