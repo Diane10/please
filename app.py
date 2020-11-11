@@ -154,8 +154,14 @@ classifier_name = st.sidebar.selectbox(
     'Choose classifier',
     ('KNN', 'SVM', 'Random Forest','Logistic Regression','XGBOOST')
 )
-Y = df.iloc[:,-1]
-X = df.drop(df.iloc[:,-1],axis=1)
+label= LabelEncoder()
+for col in df.columns:
+	df[col]=label.fit_transform(df[col])
+
+
+Y = df.species
+X = df.drop(columns=['species'])
+ 
  
 X_train, X_test, y_train, y_test = train_test_split( X, Y, test_size=0.33, random_state=8)
  
