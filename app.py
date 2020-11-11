@@ -23,12 +23,10 @@ def main():
     """
     st.markdown(html_temp,unsafe_allow_html=True)
     file_buffer = st.file_uploader("Choose a CSV Log File...", type="csv", encoding = None)
-    if file_buffer:
-       uploaded_file = io.TextIOWrapper(file_buffer)
-       if uploaded_file is not None:
-           dataset = pd.read_csv(uploaded_file)
-           df = open(dataset)  
-           st.write(df)
+    dataset = pd.read_csv(file_buffer)
+    if dataset is not None:
+        df = open(dataset)  
+        st.write(df)
            
  
     # Show Columns
