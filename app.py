@@ -20,6 +20,11 @@ def main():
     <div style="background-color:tomato;"><p style="color:white;font-size:50px;padding:10px">Streamlit is Awesome</p></div>
     """
     st.markdown(html_temp,unsafe_allow_html=True)
+    file_buffer = st.file_uploader("Choose a CSV Log File...", type="csv", encoding = None)
+    if file_buffer:
+       uploaded_file = io.TextIOWrapper(file_buffer)
+       if uploaded_file is not None:
+           df = pd.read_csv(uploaded_file)
  
 #     def file_selector(folder_path='./datasets'):
 #         filenames = os.listdir(folder_path)
@@ -30,7 +35,7 @@ def main():
 #     st.info("You Selected {}".format(filename))
  
     # Read Data
-    df = pd.read_csv(file)
+#     df = pd.read_csv(file)
     # Show Dataset
  
     if st.checkbox("Show Dataset"):
