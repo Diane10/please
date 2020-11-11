@@ -27,23 +27,9 @@ def main():
        uploaded_file = io.TextIOWrapper(file_buffer)
        if uploaded_file is not None:
            df = pd.read_csv(uploaded_file)
-           st.write(df)
- 
-#     def file_selector(folder_path='./datasets'):
-#         filenames = os.listdir(folder_path)
-#         selected_filename = st.selectbox("Select A file",filenames)
-#         return os.path.join(folder_path,selected_filename)
- 
-#     filename = file_selector()
-#     st.info("You Selected {}".format(filename))
- 
-    # Read Data
-#     df = pd.read_csv(file)
-    # Show Dataset
- 
-    if st.checkbox("Show Dataset"):
-        number = st.number_input("Number of Rows to View")
-        st.dataframe(df.head(number))
+#            st.write(df)
+           if st.checkbox("Show Dataset"):
+               st.write(df)
  
     # Show Columns
     if st.button("Column Names"):
