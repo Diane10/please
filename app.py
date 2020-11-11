@@ -26,12 +26,15 @@ def main():
     if file_buffer:
        uploaded_file = io.TextIOWrapper(file_buffer)
        if uploaded_file is not None:
-           df = pd.read_csv(uploaded_file)
-#            st.write(df)
-           if st.checkbox("Show Dataset"):
-               st.write(df)
+           dataset = pd.read_csv(uploaded_file)
+           df = open(dataset)  
+           st.write(df)
+           
  
     # Show Columns
+    if st.checkbox("Show Dataset"):
+        number = st.number_input("Number of Rows to View")
+        st.dataframe(df.head(number))
     if st.button("Column Names"):
         st.write(df.columns)
  
