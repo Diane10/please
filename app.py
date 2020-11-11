@@ -154,7 +154,7 @@ classifier_name = st.sidebar.selectbox(
     'Choose classifier',
     ('KNN', 'SVM', 'Random Forest','Logistic Regression','XGBOOST')
 )
-target=df.iloc[:,-1]
+target=df.iloc[ :, -1:]
 
 X = df.loc[:, df.columns != target]
 Y = df.loc[:, df.columns == target]
