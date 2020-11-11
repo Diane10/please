@@ -15,22 +15,22 @@ def main():
     """ Common ML Dataset Explorer """
     st.title("Machine Learning Tutorial")
     st.subheader("Datasets For ML Explorer with Streamlit")
-    file = st.file_uploader("please Upload your dataset",type=['jpg','png'])
+    file = st.file_uploader("please Upload your dataset",type=['.csv'])
     html_temp = """
     <div style="background-color:tomato;"><p style="color:white;font-size:50px;padding:10px">Streamlit is Awesome</p></div>
     """
     st.markdown(html_temp,unsafe_allow_html=True)
  
-    def file_selector(folder_path='./datasets'):
-        filenames = os.listdir(folder_path)
-        selected_filename = st.selectbox("Select A file",filenames)
-        return os.path.join(folder_path,selected_filename)
+#     def file_selector(folder_path='./datasets'):
+#         filenames = os.listdir(folder_path)
+#         selected_filename = st.selectbox("Select A file",filenames)
+#         return os.path.join(folder_path,selected_filename)
  
-    filename = file_selector()
-    st.info("You Selected {}".format(filename))
+#     filename = file_selector()
+#     st.info("You Selected {}".format(filename))
  
     # Read Data
-    df = pd.read_csv(filename)
+    df = pd.read_csv(file)
     # Show Dataset
  
     if st.checkbox("Show Dataset"):
