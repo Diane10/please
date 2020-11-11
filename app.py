@@ -154,10 +154,8 @@ classifier_name = st.sidebar.selectbox(
     'Choose classifier',
     ('KNN', 'SVM', 'Random Forest','Logistic Regression','XGBOOST')
 )
-target=df.iloc[ :, -1:]
-
-X = df.loc[:, df.columns != target]
-Y = df.loc[:, df.columns == target]
+X = df.loc[:, df.columns != df.iloc[ :, -1:]]
+Y = df.iloc[ :, -1:]
  
 X_train, X_test, y_train, y_test = train_test_split( X, Y, test_size=0.33, random_state=8)
  
