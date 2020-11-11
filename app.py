@@ -21,9 +21,14 @@ def main():
     html_temp = """
     <div style="background-color:tomato;"><p style="color:white;font-size:50px;padding:10px">Streamlit is Awesome</p></div>
     """
+    import csv 
+ 
+    
     st.markdown(html_temp,unsafe_allow_html=True)
     file_buffer = st.file_uploader("Choose a CSV Log File...", type="csv", encoding = None)
     dataset = pd.read_csv(file_buffer)
+    with open(file_buffer,'r') as csv_file: #Opens the file in read mode
+        csv_reader = csv.reader(csv_file)
     if dataset is not None:
         df = open(dataset)  
         st.write(df)
