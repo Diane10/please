@@ -189,7 +189,7 @@ if classifier_name == 'SVM':
         y_pred= svcclassifier.predict(X_tested)
         acc= accuracy_score(y_test,y_pred)
         st.write("Accuracy:",acc.round(2))
-	st.write("precision_score:",precision_score(y_test,y_pred,average='micro').round(2))
+# 	st.write("precision_score:",precision_score(y_test,y_pred,average='micro').round(2))
         st.write("recall_score:",recall_score(y_test,y_pred,average='micro').round(2))
         if 'confusion matrix' in metrics:
             st.set_option('deprecation.showPyplotGlobalUse', False)
