@@ -26,6 +26,7 @@ def main():
        uploaded_file = io.TextIOWrapper(file_buffer)
        if uploaded_file is not None:
            df = pd.read_csv(uploaded_file)
+           st.write(df)
  
 #     def file_selector(folder_path='./datasets'):
 #         filenames = os.listdir(folder_path)
