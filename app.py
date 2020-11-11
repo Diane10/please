@@ -149,7 +149,11 @@ if st.button("Generate Plot"):
 
 	if st.button("Thanks"):
 		st.balloons()
-
+st.sidebar.subheader('Choose Classifer')
+classifier_name = st.sidebar.selectbox(
+    'Choose classifier',
+    ('KNN', 'SVM', 'Random Forest','Logistic Regression','XGBOOST')
+)
 target=df.iloc[:,-1]
 
 X = df.loc[:, df.columns != target]
@@ -165,11 +169,7 @@ X_tested= sl.fit_transform(X_test)
 class_name=['yes','no']
 
  
-st.sidebar.subheader('Choose Classifer')
-classifier_name = st.sidebar.selectbox(
-    'Choose classifier',
-    ('KNN', 'SVM', 'Random Forest','Logistic Regression','XGBOOST')
-)
+
 if classifier_name == 'SVM':
     st.sidebar.subheader('Model Hyperparmeter')
     c= st.sidebar.number_input("c(Reguralization)",0.01,10.0,step=0.01,key='c')
