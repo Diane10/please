@@ -22,7 +22,16 @@ from sklearn.linear_model import LogisticRegression
 import matplotlib.pyplot as plt
 import pickle
 from sklearn.preprocessing import StandardScaler
-
+try:
+ 
+    from enum import Enum
+    from io import BytesIO, StringIO
+    from typing import Union
+ 
+    import pandas as pd
+    import streamlit as st
+except Exception as e:
+    print(e)
 
 
 
@@ -35,11 +44,20 @@ html_temp = """
 """
 st.markdown(html_temp,unsafe_allow_html=True)
 st.set_option('deprecation.showfileUploaderEncoding', False)
-file_buffer = st.file_uploader("Choose a CSV Log File...", type="csv", encoding='latin-1')
+file = st.file_uploader("Upload file", type=["csv"])
 dataset = pd.read_csv(file_buffer)
-if dataset is not None:
-  df = open(dataset)  
-  st.write(df)
+show_file = st.empty()
+if not file:
+  show_file.info("Please upload a file of type: " + ", ".join(["csv"]))  
+  return
+content = file.getvalue()
+if isinstance(file, BytesIO):
+   show_file.image(file)
+else:
+   data = pd.read_csv(file)
+   st.dataframe(data.head(10))
+file.close()	
+	
 	
 def file_selector(folder_path='./datasets'):
 	filenames = os.listdir(folder_path)
