@@ -199,12 +199,12 @@ if classifier_name == 'SVM':
         if 'roc_curve' in metrics:
             st.set_option('deprecation.showPyplotGlobalUse', False)
             st.subheader('plot_roc_curve')
-            plot_roc_curve(svcclassifier,X_tested,y_test)
+            plot_roc_curve(svcclassifier,X_tested,y_test,normalize=False)
             st.pyplot()
         if 'precision_recall_curve' in metrics:
             st.set_option('deprecation.showPyplotGlobalUse', False)
             st.subheader('precision_recall_curve')
-            plot_roc_curve(svcclassifier,X_tested,y_test)
+            plot_roc_curve(svcclassifier,X_tested,y_test,normalize=False)
             st.pyplot()
         
  
