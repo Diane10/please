@@ -88,7 +88,7 @@ if st.button("Column Names"):
 
 # Show Shape
 if st.checkbox("Shape of Dataset"):
-	data_dim = st.radio("Show Dimension By ",("Rows","Columns"))
+	data_dim = st.radio("Show Dimensions By ",("Rows","Columns"))
 	if data_dim == 'Rows':
 		st.text("Number of Rows")
 		st.write(df.shape[0])
