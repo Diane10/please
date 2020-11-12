@@ -32,7 +32,14 @@ try:
     import streamlit as st
 except Exception as e:
     print(e)
+import streamlit.components.v1 as stc
 
+# File Processing Pkgs
+import pandas as pd
+import docx2txt
+from PIL import Image 
+from PyPDF2 import PdfFileReader
+import pdfplumber
 
 
 """ Common ML Dataset Explorer """
@@ -44,47 +51,16 @@ html_temp = """
 """
 st.markdown(html_temp,unsafe_allow_html=True)
 st.set_option('deprecation.showfileUploaderEncoding', False)
-try:
- 
-    from enum import Enum
-    from io import BytesIO, StringIO
-    from typing import Union
- 
-    import pandas as pd
-    import streamlit as st
-except Exception as e:
-    print(e)
- 
-STYLE = """
-<style>
-img {
-    max-width: 100%;
-}
-</style>
-"""
- 
-def main():
-    """Run this function to display the Streamlit app"""
-    st.info(__doc__)
-    st.markdown(STYLE, unsafe_allow_html=True)
- 
-    file = st.file_uploader("Upload file", type=["csv", "png", "jpg"])
-    show_file = st.empty()
- 
-    if not file:
-        show_file.info("Please upload a file of type: " + ", ".join(["csv", "png", "jpg"]))
-        return
- 
-    content = file.getvalue()
- 
-    if isinstance(file, BytesIO):
-        show_file.image(file)
-    else:
-        data = pd.read_csv(file)
-        st.dataframe(data.head(10))
-    file.close()
- 
-main()	
+st.subheader("Dataset")
+st.subheader("Dataset")
+data_file = st.file_uploader("Upload CSV",type=['csv'])
+if st.button("Process"):
+  if data_file is not None:
+    file_details = {"Filename":data_file.name,"FileType":data_file.type,"FileSize":data_file.size}
+    st.write(file_details)
+    df = pd.read_csv(data_file)
+    st.dataframe(df)
+
 	
 	
 def file_selector(folder_path='./datasets'):
