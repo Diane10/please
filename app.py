@@ -20,6 +20,9 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LogisticRegression
 import matplotlib.pyplot as plt
 import pickle
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import Flatten
 
 
 """ Common ML Dataset Explorer """
@@ -27,7 +30,7 @@ st.title("Machine Learning Tutorial App")
 st.subheader("Explorer with Streamlit")
 
 html_temp = """
-<div style="background-color:tomato;"><p style="color:white;font-size:50px;padding:10px">ML is Awesome</p></div>
+<div style="background-color:#000080;"><p style="color:white;font-size:50px;padding:10px">ML is Awesome</p></div>
 """
 st.markdown(html_temp,unsafe_allow_html=True)
 
@@ -147,12 +150,12 @@ if st.button("Generate Plot"):
 		st.write(cust_plot)
 		st.pyplot()
 
-	if st.button("Thanks"):
+	if st.button("End of Data Exploration"):
 		st.balloons()
 st.sidebar.subheader('Choose Classifer')
 classifier_name = st.sidebar.selectbox(
     'Choose classifier',
-    ('KNN', 'SVM', 'Random Forest','Logistic Regression','XGBOOST')
+    ('KNN', 'SVM', 'Random Forest','Logistic Regression','XGBOOST','Deep Learning')
 )
 label= LabelEncoder()
 for col in df.columns:
@@ -172,6 +175,16 @@ X_tested= sl.fit_transform(X_test)
  
 class_name=['yes','no']
 
+model = Sequential()
+model.add(Flatten())
+model.add(Dense(units=612,activation='relu'))
+model.add(Dense(units=15,activation='softmax'))
+model.compile(loss='sparse_categorical_crossentropy',optimizer='rmsprop', metrics=['accuracy'])
+h = model.fit(X_train, y_train, epochs=20, batch_size=256)
+accuracies= model.evaluate(X_test,y_test)
+if classifier_name == 'Deep Learning':
+   st.write(model.Summary)
+   st.write() 
  
 
 if classifier_name == 'SVM':
