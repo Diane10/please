@@ -45,7 +45,6 @@ html_temp = """
 st.markdown(html_temp,unsafe_allow_html=True)
 st.set_option('deprecation.showfileUploaderEncoding', False)
 file = st.file_uploader("Upload file", type=["csv"])
-dataset = pd.read_csv(file_buffer)
 show_file = st.empty()
 if not file:
   show_file.info("Please upload a file of type: " + ", ".join(["csv"]))  
