@@ -47,7 +47,8 @@ html_temp = """
 st.markdown(html_temp,unsafe_allow_html=True)
 st.set_option('deprecation.showfileUploaderEncoding', False)
 st.subheader("Dataset")
-st.subheader("Dataset")
+datasetchoice = st.radio("Do you what to use your own dataset?",("Yes","No"))
+		
 data_file = st.file_uploader("Upload CSV",type=['csv'])
 if st.button("Process"):
   if data_file is not None:
@@ -55,6 +56,8 @@ if st.button("Process"):
     st.write(file_details)
     df = pd.read_csv(data_file)
     st.dataframe(df)
+    return df	
+    	
 
 	
 	
