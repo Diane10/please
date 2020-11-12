@@ -39,9 +39,9 @@ file_buffer = st.file_uploader("Choose a CSV Log File...", type="csv", encoding 
 dataset = pd.read_csv(file_buffer)
 with open(file_buffer,'r') as csv_file: #Opens the file in read mode
     csv_reader = csv.reader(csv_file)
- if dataset is not None:
-    df = open(dataset)  
-    st.write(df)
+if dataset is not None:
+  df = open(dataset)  
+  st.write(df)
 	
 def file_selector(folder_path='./datasets'):
 	filenames = os.listdir(folder_path)
