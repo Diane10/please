@@ -11,6 +11,7 @@ streamlit = "*"
 seaborn = "*"
 matplotlib = "*"
 sklearn="*"
+keras="*"
 
 [requires]
 python_version = "3.6"
