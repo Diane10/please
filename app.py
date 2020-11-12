@@ -20,6 +20,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LogisticRegression
 import matplotlib.pyplot as plt
 import pickle
+import xgboost as xgb
 
 
 
@@ -333,6 +334,7 @@ if classifier_name == 'XGBOOST':
  
     if st.sidebar.button("classify",key='classify'):
         st.subheader("XGBOOST result")
+	
         model= xgb.XGBClassifier(n_estimators=n_estimators,seed=seed)
         model.fit(X_trained,y_train)
         y_prediction= model.predict(X_tested)
