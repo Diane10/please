@@ -189,12 +189,12 @@ if classifier_name == 'SVM':
         y_pred= svcclassifier.predict(X_tested)
         acc= accuracy_score(y_test,y_pred)
         st.write("Accuracy:",acc.round(2))
-# 	st.write("precision_score:",precision_score(y_test,y_pred,average='micro').round(2))
+	st.write("precision_score:",precision_score(y_test,y_pred,average='micro').round(2))
         st.write("recall_score:",recall_score(y_test,y_pred,average='micro').round(2))
         if 'confusion matrix' in metrics:
             st.set_option('deprecation.showPyplotGlobalUse', False)
             st.subheader('confusion matrix')
-            plot_confusion_matrix(svcclassifier,X_tested,y_test,display_labels=class_name)
+            plot_confusion_matrix(svcclassifier,X_tested,y_test)
             st.pyplot()
         if 'roc_curve' in metrics:
             st.set_option('deprecation.showPyplotGlobalUse', False)
