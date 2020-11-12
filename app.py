@@ -180,8 +180,8 @@ if classifier_name == 'Unsupervised Learning':
       plt.title('CLustering Projection');
       st.pyplot()
  
-Y = df.species
-X = df.drop(columns=['species'])
+Y = df.target
+X = df.drop(columns=['target'])
  
  
 X_train, X_test, y_train, y_test = train_test_split( X, Y, test_size=0.33, random_state=8)
