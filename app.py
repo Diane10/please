@@ -224,12 +224,12 @@ if classifier_name == 'Logistic Regression':
         y_prediction= Regression.predict(X_tested)
         acc= accuracy_score(y_test,y_prediction)
         st.write("Accuracy:",acc.round(2))
-        st.write("precision_score:",precision_score(y_test,y_prediction,labels=class_name).round(2))
-        st.write("recall_score:",recall_score(y_test,y_prediction,labels=class_name).round(2))
+        st.write("precision_score:",precision_score(y_test,y_prediction,average='micro').round(2))
+        st.write("recall_score:",recall_score(y_test,y_prediction,average='micro').round(2))
         if 'confusion matrix' in metrics:
             st.set_option('deprecation.showPyplotGlobalUse', False)
             st.subheader('confusion matrix')
-            plot_confusion_matrix(Regression,X_tested,y_test,display_labels=class_name)
+            plot_confusion_matrix(Regression,X_tested,y_test)
             st.pyplot()
         if 'roc_curve' in metrics:
             st.set_option('deprecation.showPyplotGlobalUse', False)
@@ -260,12 +260,12 @@ if classifier_name == 'Random Forest':
         y_prediction= model.predict(X_tested)
         acc= accuracy_score(y_test,y_prediction)
         st.write("Accuracy:",acc.round(2))
-        st.write("precision_score:",precision_score(y_test,y_prediction,labels=class_name).round(2))
-        st.write("recall_score:",recall_score(y_test,y_prediction,labels=class_name).round(2))
+        st.write("precision_score:",precision_score(y_test,y_prediction,average='micro').round(2))
+        st.write("recall_score:",recall_score(y_test,y_prediction,average='micro').round(2))
         if 'confusion matrix' in metrics:
             st.set_option('deprecation.showPyplotGlobalUse', False)
             st.subheader('confusion matrix')
-            plot_confusion_matrix(model,X_tested,y_test,display_labels=class_name)
+            plot_confusion_matrix(model,X_tested,y_test)
             st.pyplot()
         if 'roc_curve' in metrics:
             st.set_option('deprecation.showPyplotGlobalUse', False)
@@ -295,12 +295,12 @@ if classifier_name == 'KNN':
         y_prediction= model.predict(X_tested)
         acc= accuracy_score(y_test,y_prediction)
         st.write("Accuracy:",acc.round(2))
-        st.write("precision_score:",precision_score(y_test,y_prediction,labels=class_name).round(2))
-        st.write("recall_score:",recall_score(y_test,y_prediction,labels=class_name).round(2))
+        st.write("precision_score:",precision_score(y_test,y_prediction,average='micro').round(2))
+        st.write("recall_score:",recall_score(y_test,y_prediction,average='micro').round(2))
         if 'confusion matrix' in metrics:
             st.set_option('deprecation.showPyplotGlobalUse', False)
             st.subheader('confusion matrix')
-            plot_confusion_matrix(model,X_tested,y_test,display_labels=class_name)
+            plot_confusion_matrix(model,X_tested,y_test)
             st.pyplot()
         if 'roc_curve' in metrics:
             st.set_option('deprecation.showPyplotGlobalUse', False)
@@ -327,16 +327,16 @@ if classifier_name == 'XGBOOST':
         y_prediction= model.predict(X_tested)
         acc= accuracy_score(y_test,y_prediction)
         st.write("Accuracy:",acc.round(2))
-        st.write("precision_score:",precision_score(y_test,y_prediction,labels=class_name).round(2))
-        st.write("recall_score:",recall_score(y_test,y_prediction,labels=class_name).round(2))
-        st.write("ROC_AUC_score:",roc_auc_score(y_test,y_prediction).round(2))
+        st.write("precision_score:",precision_score(y_test,y_prediction,average='micro').round(2))
+        st.write("recall_score:",recall_score(y_test,y_prediction,average='micro').round(2))
+        st.write("ROC_AUC_score:",roc_auc_score(y_test,y_prediction,average='micro').round(2))
  
        
  
         if 'confusion matrix' in metrics:
             st.set_option('deprecation.showPyplotGlobalUse', False)
             st.subheader('confusion matrix')
-            plot_confusion_matrix(model,X_tested,y_test,display_labels=class_name)
+            plot_confusion_matrix(model,X_tested,y_test)
             st.pyplot()
         if 'roc_curve' in metrics:
             st.set_option('deprecation.showPyplotGlobalUse', False)
