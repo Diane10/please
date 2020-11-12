@@ -59,7 +59,8 @@ data_file = st.file_uploader("Upload CSV",type=['csv'])
     	
 def file_selector(dataset):
   if dataset is not None:
-    file_details = {"Filename":dataset.name,"FileType":dataset.type,"FileSize":dataset.size}st.write(file_details)
+    file_details = {"Filename":dataset.name,"FileType":dataset.type,"FileSize":dataset.size}
+    st.write(file_details)
     df = pd.read_csv(dataset)
     return df	
 df = file_selector(data_file)	
