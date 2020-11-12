@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
+from sklearn.cluster import KMeans
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -20,7 +21,9 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LogisticRegression
 import matplotlib.pyplot as plt
 import pickle
-import xgboost as xgb
+from sklearn.preprocessing import StandardScaler
+
+# import xgboost as xgb
 
 
 
@@ -33,6 +36,9 @@ html_temp = """
 """
 st.markdown(html_temp,unsafe_allow_html=True)
 
+machinetype = st.radio("which supervised learning type do you want to use? ",("Supervised Learning","Unsupervised"))
+# if machinetype == 'Supervised Learning':
+	
 def file_selector(folder_path='./datasets'):
 	filenames = os.listdir(folder_path)
 	selected_filename = st.selectbox("Select A file",filenames)
@@ -154,7 +160,7 @@ if st.button("Generate Plot"):
 st.sidebar.subheader('Choose Classifer')
 classifier_name = st.sidebar.selectbox(
     'Choose classifier',
-    ('KNN', 'SVM', 'Random Forest','Logistic Regression','XGBOOST','Deep Learning')
+    ('KNN', 'SVM', 'Random Forest','Logistic Regression','XGBOOST','Unsupervised Learning')
 )
 label= LabelEncoder()
 for col in df.columns:
@@ -181,9 +187,19 @@ class_name=['yes','no']
 # model.compile(loss='sparse_categorical_crossentropy',optimizer='rmsprop', metrics=['accuracy'])
 # h = model.fit(X_train, y_train, epochs=20, batch_size=256)
 # accuracies= model.evaluate(X_test,y_test)
-# if classifier_name == 'Deep Learning':
-#    st.write(model.Summary)
-#    st.write() 
+if classifier_name == 'Unsupervised Learning'
+   st.sidebar.subheader('Model Hyperparmeter')
+   n_clusters= st.sidebar.number_input("c(Reguralization)",1,10,step=1,key='clusters')
+   sc = StandardScaler()
+   X_transformed = sc.fit_transform(df)
+   pca = PCA(n_components=2).fit_transform(X_transformed) # calculation Cov matrix is embeded in PCA
+   kmeans = KMeans(n_clusters)
+   kmeans.fit(pca)
+   # plt.figure(figsize=(12,10))
+   plt.scatter(pca[:,0],pca[:,1], c=kmeans.labels_, cmap='rainbow')
+   plt.title('CLustering Projection');
+   st.pyplot()
+   
  
 
 if classifier_name == 'SVM':
