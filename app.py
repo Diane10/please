@@ -50,15 +50,20 @@ st.subheader("Dataset")
 datasetchoice = st.radio("Do you what to use your own dataset?",("Yes","No"))
 		
 data_file = st.file_uploader("Upload CSV",type=['csv'])
-if st.button("Process"):
-  if data_file is not None:
-    file_details = {"Filename":data_file.name,"FileType":data_file.type,"FileSize":data_file.size}
-    st.write(file_details)
-    df = pd.read_csv(data_file)
-    st.dataframe(df)
-    return df	
+# if st.button("Process"):
+#   if data_file is not None:
+#     file_details = {"Filename":data_file.name,"FileType":data_file.type,"FileSize":data_file.size}
+#     st.write(file_details)
+#     df = pd.read_csv(data_file)
+#     st.dataframe(df)
     	
-
+def file_selector(dataset):
+  if dataset is not None:
+    file_details = {"Filename":dataset.name,"FileType":dataset.type,"FileSize":dataset.size}st.write(file_details)
+    df = pd.read_csv(dataset)
+    return df	
+df = file_selector(data_file)	
+st.dataframe(df)
 	
 	
 # def file_selector(folder_path='./datasets'):
