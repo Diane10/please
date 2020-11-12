@@ -186,7 +186,7 @@ class_name=['yes','no']
 # model.compile(loss='sparse_categorical_crossentropy',optimizer='rmsprop', metrics=['accuracy'])
 # h = model.fit(X_train, y_train, epochs=20, batch_size=256)
 # accuracies= model.evaluate(X_test,y_test)
-if classifier_name == 'Unsupervised Learning'
+if classifier_name == 'Unsupervised Learning':
    st.sidebar.subheader('Model Hyperparmeter')
    n_clusters= st.sidebar.number_input("c(Reguralization)",1,10,step=1,key='clusters')
    sc = StandardScaler()
