@@ -20,9 +20,9 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LogisticRegression
 import matplotlib.pyplot as plt
 import pickle
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import Flatten
+# from keras.models import Sequential
+# from keras.layers import Dense
+# from keras.layers import Flatten
 
 
 """ Common ML Dataset Explorer """
@@ -175,16 +175,16 @@ X_tested= sl.fit_transform(X_test)
  
 class_name=['yes','no']
 
-model = Sequential()
-model.add(Flatten())
-model.add(Dense(units=612,activation='relu'))
-model.add(Dense(units=15,activation='softmax'))
-model.compile(loss='sparse_categorical_crossentropy',optimizer='rmsprop', metrics=['accuracy'])
-h = model.fit(X_train, y_train, epochs=20, batch_size=256)
-accuracies= model.evaluate(X_test,y_test)
-if classifier_name == 'Deep Learning':
-   st.write(model.Summary)
-   st.write() 
+# model = Sequential()
+# model.add(Flatten())
+# model.add(Dense(units=612,activation='relu'))
+# model.add(Dense(units=15,activation='softmax'))
+# model.compile(loss='sparse_categorical_crossentropy',optimizer='rmsprop', metrics=['accuracy'])
+# h = model.fit(X_train, y_train, epochs=20, batch_size=256)
+# accuracies= model.evaluate(X_test,y_test)
+# if classifier_name == 'Deep Learning':
+#    st.write(model.Summary)
+#    st.write() 
  
 
 if classifier_name == 'SVM':
