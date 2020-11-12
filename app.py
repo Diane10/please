@@ -20,9 +20,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LogisticRegression
 import matplotlib.pyplot as plt
 import pickle
-# from keras.models import Sequential
-# from keras.layers import Dense
-# from keras.layers import Flatten
+
 
 
 """ Common ML Dataset Explorer """
