@@ -34,11 +34,9 @@ html_temp = """
 <div style="background-color:#000080;"><p style="color:white;font-size:50px;padding:10px">ML is Awesome</p></div>
 """
 st.markdown(html_temp,unsafe_allow_html=True)
-
-file_buffer = st.file_uploader("Choose a CSV Log File...", type="csv", encoding = None)
+st.set_option('deprecation.showfileUploaderEncoding', False)
+file_buffer = st.file_uploader("Choose a CSV Log File...", type="csv", encoding='latin-1')
 dataset = pd.read_csv(file_buffer)
-with open(file_buffer,'r') as csv_file: #Opens the file in read mode
-    csv_reader = csv.reader(csv_file)
 if dataset is not None:
   df = open(dataset)  
   st.write(df)
