@@ -188,16 +188,17 @@ class_name=['yes','no']
 # accuracies= model.evaluate(X_test,y_test)
 if classifier_name == 'Unsupervised Learning':
    st.sidebar.subheader('Model Hyperparmeter')
-   n_clusters= st.sidebar.number_input("c(Reguralization)",1,10,step=1,key='clusters')
-   sc = StandardScaler()
-   X_transformed = sc.fit_transform(df)
-   pca = PCA(n_components=2).fit_transform(X_transformed) # calculation Cov matrix is embeded in PCA
-   kmeans = KMeans(n_clusters)
-   kmeans.fit(pca)
+   n_clusters= st.sidebar.number_input("number of clusters",1,10,step=1,key='clusters')
+   if st.sidebar.button("classify",key='classify'):	
+      sc = StandardScaler()
+      X_transformed = sc.fit_transform(df)
+      pca = PCA(n_components=2).fit_transform(X_transformed) # calculation Cov matrix is embeded in PCA
+      kmeans = KMeans(n_clusters)
+      kmeans.fit(pca)
    # plt.figure(figsize=(12,10))
-   plt.scatter(pca[:,0],pca[:,1], c=kmeans.labels_, cmap='rainbow')
-   plt.title('CLustering Projection');
-   st.pyplot()
+      plt.scatter(pca[:,0],pca[:,1], c=kmeans.labels_, cmap='rainbow')
+      plt.title('CLustering Projection');
+      st.pyplot()
    
  
 
