@@ -35,8 +35,6 @@ html_temp = """
 """
 st.markdown(html_temp,unsafe_allow_html=True)
 
-machinetype = st.radio("which supervised learning type do you want to use? ",("Supervised Learning","Unsupervised"))
-# if machinetype == 'Supervised Learning':
 	
 def file_selector(folder_path='./datasets'):
 	filenames = os.listdir(folder_path)
@@ -166,6 +164,22 @@ for col in df.columns:
 	df[col]=label.fit_transform(df[col])
 
 
+
+if classifier_name == 'Unsupervised Learning':
+   st.sidebar.subheader('Model Hyperparmeter')
+   n_clusters= st.sidebar.number_input("number of clusters",2,10,step=1,key='clusters')
+   if st.sidebar.button("classify",key='classify'):	
+      sc = StandardScaler()
+      X_transformed = sc.fit_transform(df)
+      pca = PCA(n_components=2).fit_transform(X_transformed) # calculation Cov matrix is embeded in PCA
+      kmeans = KMeans(n_clusters)
+      kmeans.fit(pca)
+      st.set_option('deprecation.showPyplotGlobalUse', False)
+   # plt.figure(figsize=(12,10))
+      plt.scatter(pca[:,0],pca[:,1], c=kmeans.labels_, cmap='rainbow')
+      plt.title('CLustering Projection');
+      st.pyplot()
+ 
 Y = df.species
 X = df.drop(columns=['species'])
  
@@ -178,30 +192,7 @@ X_trained= sl.fit_transform(X_train)
 X_tested= sl.fit_transform(X_test)
  
 class_name=['yes','no']
-
-# model = Sequential()
-# model.add(Flatten())
-# model.add(Dense(units=612,activation='relu'))
-# model.add(Dense(units=15,activation='softmax'))
-# model.compile(loss='sparse_categorical_crossentropy',optimizer='rmsprop', metrics=['accuracy'])
-# h = model.fit(X_train, y_train, epochs=20, batch_size=256)
-# accuracies= model.evaluate(X_test,y_test)
-if classifier_name == 'Unsupervised Learning':
-   st.sidebar.subheader('Model Hyperparmeter')
-   n_clusters= st.sidebar.number_input("number of clusters",1,10,step=1,key='clusters')
-   if st.sidebar.button("classify",key='classify'):	
-      sc = StandardScaler()
-      X_transformed = sc.fit_transform(df)
-      pca = PCA(n_components=2).fit_transform(X_transformed) # calculation Cov matrix is embeded in PCA
-      kmeans = KMeans(n_clusters)
-      kmeans.fit(pca)
-   # plt.figure(figsize=(12,10))
-      plt.scatter(pca[:,0],pca[:,1], c=kmeans.labels_, cmap='rainbow')
-      plt.title('CLustering Projection');
-      st.pyplot()
-   
  
-
 if classifier_name == 'SVM':
     st.sidebar.subheader('Model Hyperparmeter')
     c= st.sidebar.number_input("c(Reguralization)",0.01,10.0,step=0.01,key='c')
