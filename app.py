@@ -54,333 +54,333 @@ if datasetchoice=='No':
     selected_filename = st.selectbox("Select A file",filenames)
     return os.path.join(folder_path,selected_filename)
 
-    filename = file_selector()
-    st.info("You Selected {}".format(filename))
+  filename = file_selector()
+  st.info("You Selected {}".format(filename))
 
-    # Read Data
-    df = pd.read_csv(filename)
-    # Show Dataset
+  # Read Data
+  df = pd.read_csv(filename)
+  # Show Dataset
 
-    if st.checkbox("Show Dataset"):
-      st.dataframe(df)
+  if st.checkbox("Show Dataset"):
+    st.dataframe(df)
 
-    # Show Columns
-    if st.button("Column Names"):
-      st.write(df.columns)
+  # Show Columns
+  if st.button("Column Names"):
+    st.write(df.columns)
 
-    # Show Shape
-    if st.checkbox("Shape of Dataset"):
-      data_dim = st.radio("Show Dimensions By ",("Rows","Columns"))
-      if data_dim == 'Rows':
-        st.text("Number of Rows")
-        st.write(df.shape[0])
-      elif data_dim == 'Columns':
-        st.text("Number of Columns")
-        st.write(df.shape[1])
+  # Show Shape
+  if st.checkbox("Shape of Dataset"):
+    data_dim = st.radio("Show Dimensions By ",("Rows","Columns"))
+    if data_dim == 'Rows':
+      st.text("Number of Rows")
+      st.write(df.shape[0])
+    elif data_dim == 'Columns':
+      st.text("Number of Columns")
+      st.write(df.shape[1])
+    else:
+      st.write(df.shape)
+
+  # Select Columns
+  if st.checkbox("Select Columns To Show"):
+    all_columns = df.columns.tolist()
+    selected_columns = st.multiselect("Select",all_columns)
+    new_df = df[selected_columns]
+    st.dataframe(new_df)
+
+  # Show Values
+  if st.button("Value Counts"):
+    st.text("Value Counts By Target/Class")
+    st.write(df.iloc[:,-1].value_counts())
+
+
+  # Show Datatypes
+  if st.button("Data Types"):
+    st.write(df.dtypes)
+
+
+  # Show Summary
+  if st.checkbox("Summary"):
+    st.write(df.describe().T)
+
+  ## Plot and Visualization
+
+  st.subheader("Data Visualization")
+  # Correlation
+  # Seaborn Plot
+  if st.checkbox("Correlation Plot[Seaborn]"):
+    st.write(sns.heatmap(df.corr(),annot=True))
+    st.pyplot()
+
+
+  # Pie Chart
+  if st.checkbox("Pie Plot"):
+    all_columns_names = df.columns.tolist()
+    if st.button("Generate Pie Plot"):
+      st.success("Generating A Pie Plot")
+      st.write(df.iloc[:,-1].value_counts().plot.pie(autopct="%1.1f%%"))
+      st.pyplot()
+
+  # Count Plot
+  if st.checkbox("Plot of Value Counts"):
+    st.text("Value Counts By Target")
+    all_columns_names = df.columns.tolist()
+    primary_col = st.selectbox("Primary Columm to GroupBy",all_columns_names)
+    selected_columns_names = st.multiselect("Select Columns",all_columns_names)
+    if st.button("Plot"):
+      st.text("Generate Plot")
+      if selected_columns_names:
+        vc_plot = df.groupby(primary_col)[selected_columns_names].count()
       else:
-        st.write(df.shape)
-
-    # Select Columns
-    if st.checkbox("Select Columns To Show"):
-      all_columns = df.columns.tolist()
-      selected_columns = st.multiselect("Select",all_columns)
-      new_df = df[selected_columns]
-      st.dataframe(new_df)
-
-    # Show Values
-    if st.button("Value Counts"):
-      st.text("Value Counts By Target/Class")
-      st.write(df.iloc[:,-1].value_counts())
-
-
-    # Show Datatypes
-    if st.button("Data Types"):
-      st.write(df.dtypes)
-
-
-    # Show Summary
-    if st.checkbox("Summary"):
-      st.write(df.describe().T)
-
-    ## Plot and Visualization
-
-    st.subheader("Data Visualization")
-    # Correlation
-    # Seaborn Plot
-    if st.checkbox("Correlation Plot[Seaborn]"):
-      st.write(sns.heatmap(df.corr(),annot=True))
+        vc_plot = df.iloc[:,-1].value_counts()
+      st.write(vc_plot.plot(kind="bar"))
       st.pyplot()
 
 
-    # Pie Chart
-    if st.checkbox("Pie Plot"):
-      all_columns_names = df.columns.tolist()
-      if st.button("Generate Pie Plot"):
-        st.success("Generating A Pie Plot")
-        st.write(df.iloc[:,-1].value_counts().plot.pie(autopct="%1.1f%%"))
+  # Customizable Plot
+
+  st.subheader("Customizable Plot")
+  all_columns_names = df.columns.tolist()
+  type_of_plot = st.selectbox("Select Type of Plot",["area","bar","line","hist","box","kde"])
+  selected_columns_names = st.multiselect("Select Columns To Plot",all_columns_names)
+
+  if st.button("Generate Plot"):
+    st.success("Generating Customizable Plot of {} for {}".format(type_of_plot,selected_columns_names))
+
+    # Plot By Streamlit
+    if type_of_plot == 'area':
+      cust_data = df[selected_columns_names]
+      st.area_chart(cust_data)
+
+    elif type_of_plot == 'bar':
+      cust_data = df[selected_columns_names]
+      st.bar_chart(cust_data)
+
+    elif type_of_plot == 'line':
+      cust_data = df[selected_columns_names]
+      st.line_chart(cust_data)
+
+    # Custom Plot 
+    elif type_of_plot:
+      cust_plot= df[selected_columns_names].plot(kind=type_of_plot)
+      st.write(cust_plot)
+      st.pyplot()
+
+    if st.button("End of Data Exploration"):
+      st.balloons()
+  st.sidebar.subheader('Choose Classifer')
+  classifier_name = st.sidebar.selectbox(
+      'Choose classifier',
+      ('KNN', 'SVM', 'Random Forest','Logistic Regression','XGBOOST','Unsupervised Learning')
+  )
+  label= LabelEncoder()
+  for col in df.columns:
+    df[col]=label.fit_transform(df[col])
+
+
+
+  if classifier_name == 'Unsupervised Learning':
+    st.sidebar.subheader('Model Hyperparmeter')
+    n_clusters= st.sidebar.number_input("number of clusters",2,10,step=1,key='clusters')
+    if st.sidebar.button("classify",key='classify'):	
+        sc = StandardScaler()
+        X_transformed = sc.fit_transform(df)
+        pca = PCA(n_components=2).fit_transform(X_transformed) # calculation Cov matrix is embeded in PCA
+        kmeans = KMeans(n_clusters)
+        kmeans.fit(pca)
+        st.set_option('deprecation.showPyplotGlobalUse', False)
+    # plt.figure(figsize=(12,10))
+        plt.scatter(pca[:,0],pca[:,1], c=kmeans.labels_, cmap='rainbow')
+        plt.title('CLustering Projection');
         st.pyplot()
-
-    # Count Plot
-    if st.checkbox("Plot of Value Counts"):
-      st.text("Value Counts By Target")
-      all_columns_names = df.columns.tolist()
-      primary_col = st.selectbox("Primary Columm to GroupBy",all_columns_names)
-      selected_columns_names = st.multiselect("Select Columns",all_columns_names)
-      if st.button("Plot"):
-        st.text("Generate Plot")
-        if selected_columns_names:
-          vc_plot = df.groupby(primary_col)[selected_columns_names].count()
-        else:
-          vc_plot = df.iloc[:,-1].value_counts()
-        st.write(vc_plot.plot(kind="bar"))
-        st.pyplot()
-
-
-    # Customizable Plot
-
-    st.subheader("Customizable Plot")
-    all_columns_names = df.columns.tolist()
-    type_of_plot = st.selectbox("Select Type of Plot",["area","bar","line","hist","box","kde"])
-    selected_columns_names = st.multiselect("Select Columns To Plot",all_columns_names)
-
-    if st.button("Generate Plot"):
-      st.success("Generating Customizable Plot of {} for {}".format(type_of_plot,selected_columns_names))
-
-      # Plot By Streamlit
-      if type_of_plot == 'area':
-        cust_data = df[selected_columns_names]
-        st.area_chart(cust_data)
-
-      elif type_of_plot == 'bar':
-        cust_data = df[selected_columns_names]
-        st.bar_chart(cust_data)
-
-      elif type_of_plot == 'line':
-        cust_data = df[selected_columns_names]
-        st.line_chart(cust_data)
-
-      # Custom Plot 
-      elif type_of_plot:
-        cust_plot= df[selected_columns_names].plot(kind=type_of_plot)
-        st.write(cust_plot)
-        st.pyplot()
-
-      if st.button("End of Data Exploration"):
-        st.balloons()
-    st.sidebar.subheader('Choose Classifer')
-    classifier_name = st.sidebar.selectbox(
-        'Choose classifier',
-        ('KNN', 'SVM', 'Random Forest','Logistic Regression','XGBOOST','Unsupervised Learning')
-    )
-    label= LabelEncoder()
-    for col in df.columns:
-      df[col]=label.fit_transform(df[col])
-
-
-
-    if classifier_name == 'Unsupervised Learning':
+  
+  Y = df.target
+  X = df.drop(columns=['target'])
+  
+  
+  X_train, X_test, y_train, y_test = train_test_split( X, Y, test_size=0.33, random_state=8)
+  
+  from sklearn.preprocessing import StandardScaler
+  sl=StandardScaler()
+  X_trained= sl.fit_transform(X_train)
+  X_tested= sl.fit_transform(X_test)
+  
+  class_name=['yes','no']
+  
+  if classifier_name == 'SVM':
       st.sidebar.subheader('Model Hyperparmeter')
-      n_clusters= st.sidebar.number_input("number of clusters",2,10,step=1,key='clusters')
-      if st.sidebar.button("classify",key='classify'):	
-          sc = StandardScaler()
-          X_transformed = sc.fit_transform(df)
-          pca = PCA(n_components=2).fit_transform(X_transformed) # calculation Cov matrix is embeded in PCA
-          kmeans = KMeans(n_clusters)
-          kmeans.fit(pca)
-          st.set_option('deprecation.showPyplotGlobalUse', False)
-      # plt.figure(figsize=(12,10))
-          plt.scatter(pca[:,0],pca[:,1], c=kmeans.labels_, cmap='rainbow')
-          plt.title('CLustering Projection');
-          st.pyplot()
-    
-    Y = df.target
-    X = df.drop(columns=['target'])
-    
-    
-    X_train, X_test, y_train, y_test = train_test_split( X, Y, test_size=0.33, random_state=8)
-    
-    from sklearn.preprocessing import StandardScaler
-    sl=StandardScaler()
-    X_trained= sl.fit_transform(X_train)
-    X_tested= sl.fit_transform(X_test)
-    
-    class_name=['yes','no']
-    
-    if classifier_name == 'SVM':
-        st.sidebar.subheader('Model Hyperparmeter')
-        c= st.sidebar.number_input("c(Reguralization)",0.01,10.0,step=0.01,key='c')
-        kernel= st.sidebar.radio("kernel",("linear","rbf"),key='kernel')
-        gamma= st.sidebar.radio("gamma(kernel coefficiency",("scale","auto"),key='gamma')
-    
-        metrics= st.sidebar.multiselect("What is the metrics to plot?",('confusion matrix','roc_curve','precision_recall_curve'))
-    
-        if st.sidebar.button("classify",key='classify'):
-            st.subheader("SVM result")
-            svcclassifier= SVC(C=c,kernel=kernel,gamma=gamma)
-            svcclassifier.fit(X_trained,y_train)
-            y_pred= svcclassifier.predict(X_tested)
-            acc= accuracy_score(y_test,y_pred)
-            st.write("Accuracy:",acc.round(2))
-    # 	st.write("precision_score:",precision_score(y_test,y_pred,average='micro').round(2))
-            st.write("recall_score:",recall_score(y_test,y_pred,average='micro').round(2))
-            if 'confusion matrix' in metrics:
-                st.set_option('deprecation.showPyplotGlobalUse', False)
-                st.subheader('confusion matrix')
-                plot_confusion_matrix(svcclassifier,X_tested,y_test)
-                st.pyplot()
-            if 'roc_curve' in metrics:
-                st.set_option('deprecation.showPyplotGlobalUse', False)
-                st.subheader('plot_roc_curve')
-                plot_roc_curve(svcclassifier,X_tested,y_test,normalize=False)
-                st.pyplot()
-            if 'precision_recall_curve' in metrics:
-                st.set_option('deprecation.showPyplotGlobalUse', False)
-                st.subheader('precision_recall_curve')
-                plot_roc_curve(svcclassifier,X_tested,y_test,normalize=False)
-                st.pyplot()
-            
-    
-    
-    if classifier_name == 'Logistic Regression':
-        st.sidebar.subheader('Model Hyperparmeter')
-        c= st.sidebar.number_input("c(Reguralization)",0.01,10.0,step=0.01,key='Logistic')
-        max_iter= st.sidebar.slider("maximum number of iteration",100,500,key='max_item')
-      
-    
-        metrics= st.sidebar.multiselect("Wht is the metrics to plot?",('confusion matrix','roc_curve','precision_recall_curve'))
-    
-        if st.sidebar.button("classify",key='classify'):
-            st.subheader("Logistic Regression result")
-            Regression= LogisticRegression(C=c,max_iter=max_iter)
-            Regression.fit(X_trained,y_train)
-            y_prediction= Regression.predict(X_tested)
-            acc= accuracy_score(y_test,y_prediction)
-            st.write("Accuracy:",acc.round(2))
-            st.write("precision_score:",precision_score(y_test,y_prediction,average='micro').round(2))
-            st.write("recall_score:",recall_score(y_test,y_prediction,average='micro').round(2))
-            if 'confusion matrix' in metrics:
-                st.set_option('deprecation.showPyplotGlobalUse', False)
-                st.subheader('confusion matrix')
-                plot_confusion_matrix(Regression,X_tested,y_test)
-                st.pyplot()
-            if 'roc_curve' in metrics:
-                st.set_option('deprecation.showPyplotGlobalUse', False)
-                st.subheader('plot_roc_curve')
-                plot_roc_curve(Regression,X_tested,y_test)
-                st.pyplot()
-            if 'precision_recall_curve' in metrics:
-                st.set_option('deprecation.showPyplotGlobalUse', False)
-                st.subheader('precision_recall_curve')
-                plot_roc_curve(Regression,X_tested,y_test)
-                st.pyplot()
-            
-                
-    
-    if classifier_name == 'Random Forest':
-        st.sidebar.subheader('Model Hyperparmeter')
-        n_estimators= st.sidebar.number_input("Number of trees in the forest",100,5000,step=10,key='estimators')
-        max_depth= st.sidebar.number_input("maximum depth of tree",1,20,step=1,key='max_depth')
-        bootstrap= st.sidebar.radio("Boostrap sample when building trees",("True","False"),key='boostrap')
-    
-    
-        metrics= st.sidebar.multiselect("What is the metrics to plot?",('confusion matrix','roc_curve','precision_recall_curve'))
-    
-        if st.sidebar.button("classify",key='classify'):
-            st.subheader("Random Forest result")
-            model= RandomForestClassifier(n_estimators=n_estimators,max_depth=max_depth,bootstrap=bootstrap)
-            model.fit(X_trained,y_train)
-            y_prediction= model.predict(X_tested)
-            acc= accuracy_score(y_test,y_prediction)
-            st.write("Accuracy:",acc.round(2))
-            st.write("precision_score:",precision_score(y_test,y_prediction,average='micro').round(2))
-            st.write("recall_score:",recall_score(y_test,y_prediction,average='micro').round(2))
-            if 'confusion matrix' in metrics:
-                st.set_option('deprecation.showPyplotGlobalUse', False)
-                st.subheader('confusion matrix')
-                plot_confusion_matrix(model,X_tested,y_test)
-                st.pyplot()
-            if 'roc_curve' in metrics:
-                st.set_option('deprecation.showPyplotGlobalUse', False)
-                st.subheader('plot_roc_curve')
-                plot_roc_curve(model,X_tested,y_test)
-                st.pyplot()
-            if 'precision_recall_curve' in metrics:
-                st.set_option('deprecation.showPyplotGlobalUse', False)
-                st.subheader('precision_recall_curve')
-                plot_roc_curve(model,X_tested,y_test)
-                st.pyplot() 
-    
-    
-    if classifier_name == 'KNN':
-        st.sidebar.subheader('Model Hyperparmeter')
-        n_neighbors= st.sidebar.number_input("Number of n_neighbors",5,30,step=1,key='neighbors')
-        leaf_size= st.sidebar.slider("leaf size",30,200,key='leaf')
-        weights= st.sidebar.radio("weight function used in prediction",("uniform","distance"),key='weight')
-    
-    
-        metrics= st.sidebar.multiselect("What is the metrics to plot?",('confusion matrix','roc_curve','precision_recall_curve'))
-    
-        if st.sidebar.button("classify",key='classify'):
-            st.subheader("KNN result")
-            model= KNeighborsClassifier(n_neighbors=n_neighbors,leaf_size=leaf_size,weights=weights)
-            model.fit(X_trained,y_train)
-            y_prediction= model.predict(X_tested)
-            acc= accuracy_score(y_test,y_prediction)
-            st.write("Accuracy:",acc.round(2))
-            st.write("precision_score:",precision_score(y_test,y_prediction,average='micro').round(2))
-            st.write("recall_score:",recall_score(y_test,y_prediction,average='micro').round(2))
-            if 'confusion matrix' in metrics:
-                st.set_option('deprecation.showPyplotGlobalUse', False)
-                st.subheader('confusion matrix')
-                plot_confusion_matrix(model,X_tested,y_test)
-                st.pyplot()
-            if 'roc_curve' in metrics:
-                st.set_option('deprecation.showPyplotGlobalUse', False)
-                st.subheader('plot_roc_curve')
-                plot_roc_curve(model,X_tested,y_test)
-                st.pyplot()
-            if 'precision_recall_curve' in metrics:
-                st.set_option('deprecation.showPyplotGlobalUse', False)
-                st.subheader('precision_recall_curve')
-                plot_roc_curve(model,X_tested,y_test)
-                st.pyplot() 
-    
-    
-    if classifier_name == 'XGBOOST':
-        st.sidebar.subheader('Model Hyperparmeter')
-        n_estimators= st.sidebar.number_input("Number of trees in the forest",100,5000,step=10,key='XGBestimators')
-        seed= st.sidebar.number_input("number of the seed",1,150,step=1,key='seed')
-        metrics= st.sidebar.multiselect("What is the metrics to plot?",('confusion matrix','roc_curve','precision_recall_curve'))
-    
-        if st.sidebar.button("classify",key='classify'):
-            st.subheader("XGBOOST result")
-      
-            model= xgb.XGBClassifier(n_estimators=n_estimators,seed=seed)
-            model.fit(X_trained,y_train)
-            y_prediction= model.predict(X_tested)
-            acc= accuracy_score(y_test,y_prediction)
-            st.write("Accuracy:",acc.round(2))
-            st.write("precision_score:",precision_score(y_test,y_prediction,average='micro').round(2))
-            st.write("recall_score:",recall_score(y_test,y_prediction,average='micro').round(2))
-            st.write("ROC_AUC_score:",roc_auc_score(y_test,y_prediction,average='micro').round(2))
-    
+      c= st.sidebar.number_input("c(Reguralization)",0.01,10.0,step=0.01,key='c')
+      kernel= st.sidebar.radio("kernel",("linear","rbf"),key='kernel')
+      gamma= st.sidebar.radio("gamma(kernel coefficiency",("scale","auto"),key='gamma')
+  
+      metrics= st.sidebar.multiselect("What is the metrics to plot?",('confusion matrix','roc_curve','precision_recall_curve'))
+  
+      if st.sidebar.button("classify",key='classify'):
+          st.subheader("SVM result")
+          svcclassifier= SVC(C=c,kernel=kernel,gamma=gamma)
+          svcclassifier.fit(X_trained,y_train)
+          y_pred= svcclassifier.predict(X_tested)
+          acc= accuracy_score(y_test,y_pred)
+          st.write("Accuracy:",acc.round(2))
+  # 	st.write("precision_score:",precision_score(y_test,y_pred,average='micro').round(2))
+          st.write("recall_score:",recall_score(y_test,y_pred,average='micro').round(2))
+          if 'confusion matrix' in metrics:
+              st.set_option('deprecation.showPyplotGlobalUse', False)
+              st.subheader('confusion matrix')
+              plot_confusion_matrix(svcclassifier,X_tested,y_test)
+              st.pyplot()
+          if 'roc_curve' in metrics:
+              st.set_option('deprecation.showPyplotGlobalUse', False)
+              st.subheader('plot_roc_curve')
+              plot_roc_curve(svcclassifier,X_tested,y_test,normalize=False)
+              st.pyplot()
+          if 'precision_recall_curve' in metrics:
+              st.set_option('deprecation.showPyplotGlobalUse', False)
+              st.subheader('precision_recall_curve')
+              plot_roc_curve(svcclassifier,X_tested,y_test,normalize=False)
+              st.pyplot()
           
+  
+  
+  if classifier_name == 'Logistic Regression':
+      st.sidebar.subheader('Model Hyperparmeter')
+      c= st.sidebar.number_input("c(Reguralization)",0.01,10.0,step=0.01,key='Logistic')
+      max_iter= st.sidebar.slider("maximum number of iteration",100,500,key='max_item')
     
-            if 'confusion matrix' in metrics:
-                st.set_option('deprecation.showPyplotGlobalUse', False)
-                st.subheader('confusion matrix')
-                plot_confusion_matrix(model,X_tested,y_test)
-                st.pyplot()
-            if 'roc_curve' in metrics:
-                st.set_option('deprecation.showPyplotGlobalUse', False)
-                st.subheader('plot_roc_curve')
-                plot_roc_curve(model,X_tested,y_test)
-                st.pyplot()
-            if 'precision_recall_curve' in metrics:
-                st.set_option('deprecation.showPyplotGlobalUse', False)
-                st.subheader('precision_recall_curve')
-                plot_roc_curve(model,X_tested,y_test)
-                st.pyplot() 
+  
+      metrics= st.sidebar.multiselect("Wht is the metrics to plot?",('confusion matrix','roc_curve','precision_recall_curve'))
+  
+      if st.sidebar.button("classify",key='classify'):
+          st.subheader("Logistic Regression result")
+          Regression= LogisticRegression(C=c,max_iter=max_iter)
+          Regression.fit(X_trained,y_train)
+          y_prediction= Regression.predict(X_tested)
+          acc= accuracy_score(y_test,y_prediction)
+          st.write("Accuracy:",acc.round(2))
+          st.write("precision_score:",precision_score(y_test,y_prediction,average='micro').round(2))
+          st.write("recall_score:",recall_score(y_test,y_prediction,average='micro').round(2))
+          if 'confusion matrix' in metrics:
+              st.set_option('deprecation.showPyplotGlobalUse', False)
+              st.subheader('confusion matrix')
+              plot_confusion_matrix(Regression,X_tested,y_test)
+              st.pyplot()
+          if 'roc_curve' in metrics:
+              st.set_option('deprecation.showPyplotGlobalUse', False)
+              st.subheader('plot_roc_curve')
+              plot_roc_curve(Regression,X_tested,y_test)
+              st.pyplot()
+          if 'precision_recall_curve' in metrics:
+              st.set_option('deprecation.showPyplotGlobalUse', False)
+              st.subheader('precision_recall_curve')
+              plot_roc_curve(Regression,X_tested,y_test)
+              st.pyplot()
+          
+              
+  
+  if classifier_name == 'Random Forest':
+      st.sidebar.subheader('Model Hyperparmeter')
+      n_estimators= st.sidebar.number_input("Number of trees in the forest",100,5000,step=10,key='estimators')
+      max_depth= st.sidebar.number_input("maximum depth of tree",1,20,step=1,key='max_depth')
+      bootstrap= st.sidebar.radio("Boostrap sample when building trees",("True","False"),key='boostrap')
+  
+  
+      metrics= st.sidebar.multiselect("What is the metrics to plot?",('confusion matrix','roc_curve','precision_recall_curve'))
+  
+      if st.sidebar.button("classify",key='classify'):
+          st.subheader("Random Forest result")
+          model= RandomForestClassifier(n_estimators=n_estimators,max_depth=max_depth,bootstrap=bootstrap)
+          model.fit(X_trained,y_train)
+          y_prediction= model.predict(X_tested)
+          acc= accuracy_score(y_test,y_prediction)
+          st.write("Accuracy:",acc.round(2))
+          st.write("precision_score:",precision_score(y_test,y_prediction,average='micro').round(2))
+          st.write("recall_score:",recall_score(y_test,y_prediction,average='micro').round(2))
+          if 'confusion matrix' in metrics:
+              st.set_option('deprecation.showPyplotGlobalUse', False)
+              st.subheader('confusion matrix')
+              plot_confusion_matrix(model,X_tested,y_test)
+              st.pyplot()
+          if 'roc_curve' in metrics:
+              st.set_option('deprecation.showPyplotGlobalUse', False)
+              st.subheader('plot_roc_curve')
+              plot_roc_curve(model,X_tested,y_test)
+              st.pyplot()
+          if 'precision_recall_curve' in metrics:
+              st.set_option('deprecation.showPyplotGlobalUse', False)
+              st.subheader('precision_recall_curve')
+              plot_roc_curve(model,X_tested,y_test)
+              st.pyplot() 
+  
+  
+  if classifier_name == 'KNN':
+      st.sidebar.subheader('Model Hyperparmeter')
+      n_neighbors= st.sidebar.number_input("Number of n_neighbors",5,30,step=1,key='neighbors')
+      leaf_size= st.sidebar.slider("leaf size",30,200,key='leaf')
+      weights= st.sidebar.radio("weight function used in prediction",("uniform","distance"),key='weight')
+  
+  
+      metrics= st.sidebar.multiselect("What is the metrics to plot?",('confusion matrix','roc_curve','precision_recall_curve'))
+  
+      if st.sidebar.button("classify",key='classify'):
+          st.subheader("KNN result")
+          model= KNeighborsClassifier(n_neighbors=n_neighbors,leaf_size=leaf_size,weights=weights)
+          model.fit(X_trained,y_train)
+          y_prediction= model.predict(X_tested)
+          acc= accuracy_score(y_test,y_prediction)
+          st.write("Accuracy:",acc.round(2))
+          st.write("precision_score:",precision_score(y_test,y_prediction,average='micro').round(2))
+          st.write("recall_score:",recall_score(y_test,y_prediction,average='micro').round(2))
+          if 'confusion matrix' in metrics:
+              st.set_option('deprecation.showPyplotGlobalUse', False)
+              st.subheader('confusion matrix')
+              plot_confusion_matrix(model,X_tested,y_test)
+              st.pyplot()
+          if 'roc_curve' in metrics:
+              st.set_option('deprecation.showPyplotGlobalUse', False)
+              st.subheader('plot_roc_curve')
+              plot_roc_curve(model,X_tested,y_test)
+              st.pyplot()
+          if 'precision_recall_curve' in metrics:
+              st.set_option('deprecation.showPyplotGlobalUse', False)
+              st.subheader('precision_recall_curve')
+              plot_roc_curve(model,X_tested,y_test)
+              st.pyplot() 
+  
+  
+  if classifier_name == 'XGBOOST':
+      st.sidebar.subheader('Model Hyperparmeter')
+      n_estimators= st.sidebar.number_input("Number of trees in the forest",100,5000,step=10,key='XGBestimators')
+      seed= st.sidebar.number_input("number of the seed",1,150,step=1,key='seed')
+      metrics= st.sidebar.multiselect("What is the metrics to plot?",('confusion matrix','roc_curve','precision_recall_curve'))
+  
+      if st.sidebar.button("classify",key='classify'):
+          st.subheader("XGBOOST result")
+    
+          model= xgb.XGBClassifier(n_estimators=n_estimators,seed=seed)
+          model.fit(X_trained,y_train)
+          y_prediction= model.predict(X_tested)
+          acc= accuracy_score(y_test,y_prediction)
+          st.write("Accuracy:",acc.round(2))
+          st.write("precision_score:",precision_score(y_test,y_prediction,average='micro').round(2))
+          st.write("recall_score:",recall_score(y_test,y_prediction,average='micro').round(2))
+          st.write("ROC_AUC_score:",roc_auc_score(y_test,y_prediction,average='micro').round(2))
+  
+        
+  
+          if 'confusion matrix' in metrics:
+              st.set_option('deprecation.showPyplotGlobalUse', False)
+              st.subheader('confusion matrix')
+              plot_confusion_matrix(model,X_tested,y_test)
+              st.pyplot()
+          if 'roc_curve' in metrics:
+              st.set_option('deprecation.showPyplotGlobalUse', False)
+              st.subheader('plot_roc_curve')
+              plot_roc_curve(model,X_tested,y_test)
+              st.pyplot()
+          if 'precision_recall_curve' in metrics:
+              st.set_option('deprecation.showPyplotGlobalUse', False)
+              st.subheader('precision_recall_curve')
+              plot_roc_curve(model,X_tested,y_test)
+              st.pyplot() 
 elif datasetchoice == 'Yes': 
   data_file = st.file_uploader("Upload CSV",type=['csv'])
 # if st.button("Process"):
