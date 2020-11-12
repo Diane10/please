@@ -56,7 +56,7 @@ data_file = st.file_uploader("Upload CSV",type=['csv'])
 #     st.write(file_details)
 #     df = pd.read_csv(data_file)
 #     st.dataframe(df)
-    	
+st.write("Note:if you want to do classification make sure you have target attributes")    	
 def file_selector(dataset):
   if dataset is not None:
     file_details = {"Filename":dataset.name,"FileType":dataset.type,"FileSize":dataset.size}
