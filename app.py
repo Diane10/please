@@ -175,19 +175,20 @@ if datasetchoice=='No':
   st.sidebar.subheader('Choose Classifer')
   classifier_name = st.sidebar.selectbox(
       'Choose classifier',
-      ('KNN', 'SVM', 'Random Forest','Logistic Regression','XGBOOST','Unsupervised Learning','Deep Learning')
+      ('KNN', 'SVM', 'Random Forest','Logistic Regression','XGBOOST','Unsupervised Learning(Kmeans)','Deep Learning')
   )
-#   model = Sequential()
-#   model.add(Flatten())
-#   model.add(Dense(units=612,activation='relu'))
-#   model.add(Dense(units=15,activation='softmax'))
+  model = Sequential()
+  model.add(Flatten())
+  model.add(Dense(units=612,activation='relu'))
+  model.add(Dense(units=15,activation='softmax'))
   label= LabelEncoder()
   for col in df.columns:
     df[col]=label.fit_transform(df[col])
 
+  if classifier_name == 'Deep Learning':
+    st.sidebar.subheader('Model Hyperparmeter')
 
-
-  if classifier_name == 'Unsupervised Learning':
+  if classifier_name == 'Unsupervised Learning(Kmeans)':
     st.sidebar.subheader('Model Hyperparmeter')
     n_clusters= st.sidebar.number_input("number of clusters",2,10,step=1,key='clusters')
     if st.sidebar.button("classify",key='classify'):	
