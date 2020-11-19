@@ -13,9 +13,11 @@ from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
-# from tensorflow.keras.models import Sequential
-# from tensorflow.keras.layers import Dense
-# from tensorflow.keras.layers import Flatten
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Flatten
+import keras_preprocessing
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
