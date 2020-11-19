@@ -186,7 +186,7 @@ if datasetchoice=='No':
     df[col]=label.fit_transform(df[col])
 
   if classifier_name == 'Deep Learning':
-    st.sidebar.subheader('Model Hyperparmeter')
+    st.sidebar.subheader('Model Hyperparmeters')
 
   if classifier_name == 'Unsupervised Learning(Kmeans)':
     st.sidebar.subheader('Model Hyperparmeter')
