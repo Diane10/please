@@ -1,17 +1,1 @@
-[[source]]
-name = "pypi"
-url = "https://pypi.org/simple"
-verify_ssl = true
 
-[dev-packages]
-
-[packages]
-pandas = "*"
-streamlit = "*"
-seaborn = "*"
-matplotlib = "*"
-sklearn="*"
-tensorflow-cpu==1.15
-keras==2.3.0
-[requires]
-python_version = "3.6"
