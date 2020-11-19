@@ -13,10 +13,10 @@ from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
-import tensorflow as tf
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
-from tensorflow.keras.layers import Flatten
+# import tensorflow as tf
+# from tensorflow.keras.models import Sequential
+# from tensorflow.keras.layers import Dense
+# # from tensorflow.keras.layers import Flatten
 import keras_preprocessing
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
@@ -177,10 +177,10 @@ if datasetchoice=='No':
       'Choose classifier',
       ('KNN', 'SVM', 'Random Forest','Logistic Regression','XGBOOST','Unsupervised Learning(Kmeans)','Deep Learning')
   )
-  model = Sequential()
-  model.add(Flatten())
-  model.add(Dense(units=612,activation='relu'))
-  model.add(Dense(units=15,activation='softmax'))
+#   model = Sequential()
+#   model.add(Flatten())
+#   model.add(Dense(units=612,activation='relu'))
+#   model.add(Dense(units=15,activation='softmax'))
   label= LabelEncoder()
   for col in df.columns:
     df[col]=label.fit_transform(df[col])
