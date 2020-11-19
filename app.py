@@ -17,7 +17,7 @@ from sklearn.cluster import KMeans
 # from tensorflow.keras.models import Sequential
 # from tensorflow.keras.layers import Dense
 # # from tensorflow.keras.layers import Flatten
-import keras_preprocessing
+# import keras_preprocessing
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
