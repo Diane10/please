@@ -13,6 +13,9 @@ from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Flatten
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -170,8 +173,12 @@ if datasetchoice=='No':
   st.sidebar.subheader('Choose Classifer')
   classifier_name = st.sidebar.selectbox(
       'Choose classifier',
-      ('KNN', 'SVM', 'Random Forest','Logistic Regression','XGBOOST','Unsupervised Learning')
+      ('KNN', 'SVM', 'Random Forest','Logistic Regression','XGBOOST','Unsupervised Learning','Deep Learning')
   )
+  model = Sequential()
+  model.add(Flatten())
+  model.add(Dense(units=612,activation='relu'))
+  model.add(Dense(units=15,activation='softmax'))
   label= LabelEncoder()
   for col in df.columns:
     df[col]=label.fit_transform(df[col])
