@@ -11,8 +11,7 @@ streamlit = "*"
 seaborn = "*"
 matplotlib = "*"
 sklearn="*"
-tensorflow="*"
-keras="*"
-
+tensorflow-cpu==1.15
+keras==2.3.0
 [requires]
 python_version = "3.6"
