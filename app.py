@@ -741,16 +741,16 @@ elif datasetchoice == 'Yes':
               plot_roc_curve(model,X_tested,y_test)
               st.pyplot() 
 
-elif datasetchoice == 'other':
-  menu = ["Home","EDA","ML","About"]
-  choice = st.sidebar.selectbox("Menu",menu)
-  if choice == "Home":
-    run_home_page()
-    pass
-  elif choice == "EDA":
-    run_eda()
-  elif choice == "ML":
-    run_ml()              
+# elif datasetchoice == 'other':
+#   menu = ["Home","EDA","ML","About"]
+#   choice = st.sidebar.selectbox("Menu",menu)
+#   if choice == "Home":
+#     run_home_page()
+#     pass
+#   elif choice == "EDA":
+#     run_eda()
+#   elif choice == "ML":
+#     run_ml()              
               
         
 
