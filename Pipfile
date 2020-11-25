@@ -11,6 +11,9 @@ streamlit = "*"
 seaborn = "*"
 matplotlib = "*"
 sklearn="*"
+wordcloud==1.7.0
+joblib==0.16.0
+plotly==4.8.0
 
 
 [requires]
