@@ -13,11 +13,10 @@ from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
-# import tensorflow as tf
-# from tensorflow.keras.models import Sequential
-# from tensorflow.keras.layers import Dense
-# # from tensorflow.keras.layers import Flatten
-# import keras_preprocessing
+import streamlit.components.v1 as stc 
+from home_page import run_home_page
+from eda_app import run_eda
+from ml_app import run_ml
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -52,7 +51,7 @@ html_temp = """
 st.markdown(html_temp,unsafe_allow_html=True)
 st.set_option('deprecation.showfileUploaderEncoding', False)
 st.subheader("Dataset")
-datasetchoice = st.radio("Do you what to use your own dataset?", ("Yes", "No"))
+datasetchoice = st.radio("Do you what to use your own dataset?", ("Yes", "No","other"))
 if datasetchoice=='No':
   def file_selector(folder_path='./datasets'):
     filenames = os.listdir(folder_path)
@@ -741,7 +740,18 @@ elif datasetchoice == 'Yes':
               st.subheader('precision_recall_curve')
               plot_roc_curve(model,X_tested,y_test)
               st.pyplot() 
-                    
+
+elif datasetchoice == 'other':
+  menu = ["Home","EDA","ML","About"]
+  choice = st.sidebar.selectbox("Menu",menu)
+  if choice == "Home":
+    run_home_page()
+    pass
+  elif choice == "EDA":
+    run_eda()
+  elif choice == "ML":
+    run_ml()              
+              
         
 
 
