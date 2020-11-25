@@ -115,7 +115,16 @@ if datasetchoice=='No':
   if st.checkbox("Correlation Plot[Seaborn]"):
     st.write(sns.heatmap(df.corr(),annot=True))
     st.pyplot()
+  c1,c2 = st.beta_columns(2)
+with st.beta_expander("Descriptive Summary"):
+  st.dataframe(df.describe())
 
+with c1:
+  with st.beta_expander("Target Distribution"):
+    st.dataframe(df.iloc[:,-1].value_counts())
+with c2:
+  with st.beta_expander("values Distribution"):
+  st.dataframe(df.iloc[:,-1].value_counts())
 
   # Pie Chart
   if st.checkbox("Pie Plot"):
