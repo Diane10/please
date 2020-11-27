@@ -13,10 +13,6 @@ from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
-import streamlit.components.v1 as stc 
-from home_page import run_home_page
-from eda_app import run_eda
-from ml_app import run_ml
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
